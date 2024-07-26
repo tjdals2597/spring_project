@@ -15,7 +15,7 @@ $(function() {
 	$("#btn3").click(function() {
 		
 		$.ajax({
-			url : "./ajaxok3.do?data=",
+			url : "./ajaxok3.do",
 			type : "GET",
 			cache : false,
 			dataType : "TEXT",

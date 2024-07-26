@@ -26,8 +26,8 @@ public class web_controller {
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/ajaxok3.do")
-	public String ajaxok3(@RequestParam(value="arr") String arr, HttpServletResponse res) throws Exception {
-		System.out.println("test");
+	public String ajaxok3(@RequestParam(value="_") String arr, HttpServletResponse res) throws Exception {
+		System.out.println(arr);
 		//this.pw = res.getWriter();
 		//this.pw.print("ok");
 		//this.pw.close();
