@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,11 +18,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 public class web_controller {
 
 	PrintWriter pw = null;
+	
+	
+	// HttpSession : interface를 활용하여, 세션을 빠르게 구현하는 방식
+	@PostMapping("/loginok.do")
+	public String loginok(@RequestParam(value = "", required = false) String mid, HttpSession session) {
+		if (mid != null) {
+			session.setAttribute("mid", mid);
+			session.setMaxInactiveInterval(1800);
+		}
+		return null;
+	}
+	/*
+	@PostMapping("/loginok.do")
+	public String loginok(String mid, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		session.setAttribute("mid", mid);
+		session.setMaxInactiveInterval(1800); // 초 단위 (밀리초 아님)
+		System.out.println(mid);
+		return null;
+	}
+	*/
+	
+	@GetMapping("/restapi.do")
+	// @SessionAttribute : session이 이미 등록된 상황일 때 해당 정보를 바로 가져올 수 있음
+	public String restapi(@SessionAttribute(name = "mid", required = false) String mid) throws Exception {
+		if (mid == null) {
+			System.out.println("로그인 해야만 결제내역을 확인하실 수 있습니다.");
+		}
+		else {
+			System.out.println(mid + "님의 결제내역은 다음과 같습니다.");
+		}
+		return null;
+	}
 	
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
