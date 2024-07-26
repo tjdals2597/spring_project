@@ -29,7 +29,7 @@ public class web_controller {
 	// HttpSession : interface를 활용하여, 세션을 빠르게 구현하는 방식
 	@PostMapping("/loginok.do")
 	public String loginok(@RequestParam(value = "", required = false) String mid, HttpSession session) {
-		if (mid != null) {
+		if (mid != null || mid != "") {
 			session.setAttribute("mid", mid);
 			session.setMaxInactiveInterval(1800);
 		}
