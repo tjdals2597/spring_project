@@ -86,6 +86,7 @@ public class main_controller extends password_sha3 {
 		this.pw = res.getWriter();
 		try {
 			htss.removeAttribute("admindata");
+			htss.setMaxInactiveInterval(1800);
 			this.pw.print("<script>alert('로그아웃 하셨습니다.'); location.href = './admin';</script>");
 		} catch (Exception e) {
 			this.pw.print("<script>alert('올바른 접근 방식이 아닙니다.'); history.go(-1);</script>");
