@@ -66,8 +66,12 @@
 		        <li>${ admindao.getAmposition() }</li>
 		        <li>${ fn:substring(admindao.getAmindate(), 0, 10) }</li>
 		        <li>
-		            <input type="button" value="승인" class="new_addbtn1" title="승인">
-		            <input type="button" value="미승인" class="new_addbtn2" title="미승인">
+		        	<cr:if test="">
+			            <input type="button" value="승인" class="new_addbtn1" title="승인">
+		        	</cr:if>
+		        	<cr:if test="">
+			            <input type="button" value="미승인" class="new_addbtn2" title="미승인">
+		        	</cr:if>
 		        </li>
 		    </ol>
     	</cr:forEach>
