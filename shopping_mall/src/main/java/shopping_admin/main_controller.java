@@ -71,7 +71,7 @@ public class main_controller extends password_sha3 {
 			admin_dao admindao = this.admd.admin_login(login_id, this.encodePass(login_pw));
 			if (admindao != null) {
 				htss.setAttribute("admindata", admindao.toSessionList());
-				this.pw.print("<script>alert('로그인 성공하셨습니다.'); location.href = './admin_list.do';</script>");
+				this.pw.print("<script>alert('로그인 성공하셨습니다.'); location.href = './admin_main.do';</script>");
 			}
 		} catch (Exception e) {
 			this.pw.print("<script>alert('아이디 및 패스워드를 확인해주세요.'); history.go(-1);</script>");

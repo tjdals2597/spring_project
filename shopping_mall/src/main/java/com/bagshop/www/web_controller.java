@@ -105,22 +105,23 @@ public class web_controller extends md5_pass {
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/ajaxok3.do")
-	public String ajaxok3(@RequestParam(value="_") String arr, HttpServletResponse res) throws Exception {
+	public String ajaxok3(@RequestParam(name = "basket") String arr, HttpServletResponse res) throws Exception {
 		System.out.println(arr);
 		//this.pw = res.getWriter();
 		//this.pw.print("ok");
 		//this.pw.close();
 		return null;
 	}
+	
 	/*
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/ajaxok3.do")
-	public String ajaxok3(@RequestBody String arr, HttpServletResponse res) throws Exception {
-		JSONArray ja = new JSONArray(arr);
+	public String ajaxok3(@RequestBody String basket, HttpServletResponse res) throws Exception {
+		JSONArray ja = new JSONArray(basket);
 		int w = 0;
 		while (w < ja.length()) {
-			JSONArray ja_dump = (JSONArray) ja.get(w);
-			System.out.println(ja_dump.get(0));
+			JSONObject jo_dump = (JSONObject) ja.get(w);
+			System.out.println(jo_dump.get("product"));
 			w++;
 		}
 		this.pw = res.getWriter();

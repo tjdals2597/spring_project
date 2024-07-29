@@ -20,7 +20,7 @@ $(function() {
 			cache : false,
 			dataType : "TEXT",
 			contentType : "application/json",
-			data : JSON.stringify(arr),
+			data : { basket : JSON.stringify(basket) },
 			success : function($result) {
 				console.log($result);
 			},
