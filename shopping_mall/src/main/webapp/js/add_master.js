@@ -43,3 +43,7 @@ function js_signsubmit() {
 		}
 	}
 }
+
+function js_signcancel() {
+	location.href = "./admin";
+}

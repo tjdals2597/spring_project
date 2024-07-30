@@ -121,19 +121,19 @@ public class main_controller extends password_sha3 {
 	public String admin_siteinfo(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
 			HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
-		String pagename = "";
-		try {
-			if (!String.valueOf(adata.get(1)).equals("0")) {
-				pagename = "admin_siteinfo";
-			}
-			else {
-				pagename = "erroralert";
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-			pagename = "erroralert";
+		if (adata == null) {
+			this.pw = res.getWriter();
+			this.pw.print("<script>alert('올바른 접근 방식이 아닙니다.'); history.go(-1);</script>");
+			this.pw.close();
 		}
-		return pagename;
+		else {
+			try {
+				m.addAttribute("homepagedata", "nodata");				
+			} catch (Exception e) {
+				m.addAttribute("homepagedata", "nodata");
+			}
+		}
+		return "admin_siteinfo";
 	}
 	
 	@PostMapping("/update_loginck.do")
