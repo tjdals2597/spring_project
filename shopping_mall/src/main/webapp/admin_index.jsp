@@ -44,9 +44,7 @@
         </form>
     </section>
 <footer class="admin_copy_login">
-    <div>
-        Copyright ⓒ 2024 shopbag All rights reserved.
-    </div>
+	<%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
 <script src="./js/admin_index.js?v=3"></script>

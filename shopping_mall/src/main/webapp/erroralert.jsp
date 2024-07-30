@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div>
-	Copyright ⓒ 2024 shopbag All rights reserved.
-</div>
+<script>
+	alert("올바른 접근 방식이 아닙니다.");
+	history.go(-2);
+</script>

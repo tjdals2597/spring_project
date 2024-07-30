@@ -21,5 +21,16 @@
 		insert into admin_member (amidx, amcheck, amid, ampass, amname, amemail, amphone, amdepartment, amposition, amloginck, amindate) 
 		values ('0', '2', #{amid}, #{ampass}, #{amname}, #{amemail}, #{amphone}, #{amdepartment}, #{amposition}, 'N', now())
 	</insert>
+	
+	<update id="admin_loginck">
+		update admin_member set 
+		<if test='ck=="Y"'>
+			amloginck = 'Y' 
+		</if>
+		<if test='ck=="N"'>
+			amloginck = 'N' 
+		</if>
+		where amidx = #{amidx}
+	</update>
 
 </mapper>
