@@ -18,23 +18,7 @@
     <link rel="icon" href="./img/logo.png" sizes="16x16">
 </head>
 <body>
-<header class="headercss">
-    <div class="header_div">
-        <p><img src="./img/logo.png" class="logo_sm"> ADMINISTRATOR</p>
-        <p>홍길동 관리자 <a href="#">[개인정보 수정]</a> <a href="./admin_logout.do">[로그아웃]</a></p>
-    </div>
-</header>
-<nav class="navcss">
-    <div class="nav_div">
-        <ol>
-            <li title="쇼핑몰 상품관리">쇼핑몰 관리자 리스트</li>
-            <li title="쇼핑몰 회원관리">쇼핑몰 회원관리</li>
-            <li title="쇼핑몰 상품관리">쇼핑몰 상품관리</li>
-            <li title="쇼핑몰 기본설정">쇼핑몰 기본설정</li>
-        </ol>
-    </div>
-
-</nav>
+<%@ include file="./admin_top.jsp" %>
 <main class="maincss">
 <section>
     <p>신규등록 관리자</p>
@@ -55,9 +39,13 @@
 	    </ol>
     </cr:if>
     <cr:if test="${ adminlist.size() != 0 }">
+    	<form id="amloginck_frm">
+    		<input type="hidden" name="amloginck" id="amloginck">
+    		<input type="hidden" name="amvalueck" id="amvalueck">
+    	</form>
     	<cr:forEach var="admindao" items="${ adminlist }" varStatus="stat">
 		    <ol class="new_admin_lists2">
-		        <li>${ stat.node }</li>
+		        <li>${ stat.count }</li>
 		        <li>${ admindao.getAmname() }</li>
 		        <li>${ admindao.getAmid() }</li>
 		        <li>${ admindao.getAmphone() }</li>
@@ -66,11 +54,11 @@
 		        <li>${ admindao.getAmposition() }</li>
 		        <li>${ fn:substring(admindao.getAmindate(), 0, 10) }</li>
 		        <li>
-		        	<cr:if test="">
-			            <input type="button" value="승인" class="new_addbtn1" title="승인">
+		        	<cr:if test="${ admindao.getAmloginck() == 'N' }">
+			            <input type="button" value="승인" onclick="amlogin_ok('${ admindao.getAmidx() }')" class="new_addbtn1" title="승인">
 		        	</cr:if>
-		        	<cr:if test="">
-			            <input type="button" value="미승인" class="new_addbtn2" title="미승인">
+		        	<cr:if test="${ admindao.getAmloginck() == 'Y' }">
+			            <input type="button" value="미승인" onclick="amlogin_no('${ admindao.getAmidx() }')" class="new_addbtn2" title="미승인">
 		        	</cr:if>
 		        </li>
 		    </ol>
@@ -80,6 +68,9 @@
 <section></section>
 <section></section>
 </main>
-<%@ include file="./admin_footer.jsp" %>
+<footer class="admin_copy">
+	<%@ include file="./admin_footer.jsp" %>
+</footer>
 </body>
+<script src="./js/admin_list.js?v=1"></script>
 </html>

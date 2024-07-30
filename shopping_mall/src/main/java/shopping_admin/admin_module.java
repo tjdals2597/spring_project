@@ -38,4 +38,11 @@ public class admin_module {
 	public List<admin_dao> list_select() {
 		return this.sstm.selectList("shopadmin.search");
 	}
+	
+	public int loginck_update(String amidx, String ck) {
+		Map<String, String> keycode = new HashMap<String, String>();
+		keycode.put("amidx", amidx);
+		keycode.put("ck", ck);
+		return this.sstm.update("shopadmin.admin_loginck", keycode);
+	}
 }

@@ -76,7 +76,9 @@
         </div>
 		</form>
     </section>
-<%@ include file="./admin_footer.jsp" %>
+    <footer class="admin_copy">
+		<%@ include file="./admin_footer.jsp" %>
+    </footer>
 </body>
 <script src="./js/add_master.js?v=1"></script>
 </html>
