@@ -21,12 +21,16 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/" />
+		<beans:property name="prefix" value="WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
 	<context:component-scan base-package="com.bagshop.www, shopping, shopping_admin" />
 	
-	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="maxUploadSize" value="10000000"/>
+		<beans:property name="maxInMemorySize" value="200000"/>
+	</beans:bean>
 	
 </beans:beans>

@@ -47,5 +47,5 @@
 	<%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
-<script src="./js/admin_index.js?v=3"></script>
+<script src="./js/admin_index.js?v=4"></script>
 </html>

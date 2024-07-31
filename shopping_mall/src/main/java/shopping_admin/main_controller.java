@@ -2,7 +2,6 @@ package shopping_admin;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +27,11 @@ public class main_controller extends password_sha3 {
 	@GetMapping("/admin")
 	public String adminmain() {
 		return "admin_index";
+	}
+	
+	@GetMapping("/admin_main.do")
+	public String admin_main() {
+		return "admin_main";
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -75,7 +79,7 @@ public class main_controller extends password_sha3 {
 				if (admindao.getAmloginck().equals("Y")) {
 					htss.setAttribute("adminSessionData", admindao.toSessionList());
 					htss.setMaxInactiveInterval(1800);
-					this.pw.print("<script>alert('로그인 성공하셨습니다.'); location.href = './admin_siteinfo.do';</script>");					
+					this.pw.print("<script>alert('로그인 성공하셨습니다.'); location.href = './admin_main.do';</script>");					
 				}
 				else {
 					this.pw.print("<script>alert('관리자의 승인 이후 로그인할 수 있습니다.'); history.go(-1);</script>");
@@ -108,7 +112,7 @@ public class main_controller extends password_sha3 {
 		res.setContentType("text/html; charset=UTF-8");
 		if (adata == null || !String.valueOf(adata.get(1)).equals("1")) {
 			this.pw = res.getWriter();
-			this.pw.print("<script>alert('올바른 접근 방식이 아닙니다.'); history.go(-1);</script>");
+			this.pw.print("<script>alert('올바른 접근 방식이 아닙니다.'); location.href = './admin';</script>");
 			this.pw.close();
 		}
 		else {
@@ -121,19 +125,35 @@ public class main_controller extends password_sha3 {
 	public String admin_siteinfo(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
 			HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
-		String pagename = "";
-		try {
-			if (!String.valueOf(adata.get(1)).equals("0")) {
-				pagename = "admin_siteinfo";
+		if (adata == null) {
+			this.pw = res.getWriter();
+			this.pw.print("<script>alert('올바른 접근 방식이 아닙니다.'); location.href = './admin';</script>");
+			this.pw.close();
+		}
+		else {
+			try {
+				m.addAttribute("homepagedata", this.admd.homepageinfo_select().toList());				
+			} catch (Exception e) {
+				m.addAttribute("homepagedata", new homepage_dao().toList());
 			}
-			else {
-				pagename = "erroralert";
+		}
+		return "admin_siteinfo";
+	}
+	
+	@PostMapping("/hpinfo_update.do")
+	public void hpinfo_update(@ModelAttribute homepage_dao dao, HttpServletResponse res) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		try {
+			this.pw = res.getWriter();
+			int callback = (dao.getHomekey() == 1) ? this.admd.hpinfo_update(dao) : this.admd.hpinfo_insert(dao);
+			if (callback > 0) {
+				this.pw.print("<script>alert('작성하신 설정이 정상적으로 저장되었습니다.'); location.href = './admin_siteinfo.do';</script>");
 			}
 		} catch (Exception e) {
-			System.out.println(e);
-			pagename = "erroralert";
+			this.pw.print("<script>alert('오류가 발생하여 저장되지 않았습니다.'); history.go(-1);</script>");
+		} finally {
+			this.pw.close();
 		}
-		return pagename;
 	}
 	
 	@PostMapping("/update_loginck.do")

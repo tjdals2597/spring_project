@@ -11,11 +11,12 @@
     <div class="nav_div">
         <ol>
         	<cr:if test="${ adminSessionData.get(1) == '1' }">
-	            <li title="쇼핑몰 상품관리">쇼핑몰 관리자 리스트</li>
+	            <li title="쇼핑몰 상품관리" onclick="js_topnav_click('1')">쇼핑몰 관리자 리스트</li>
         	</cr:if>
-            <li title="쇼핑몰 회원관리">쇼핑몰 회원관리</li>
-            <li title="쇼핑몰 상품관리">쇼핑몰 상품관리</li>
-            <li title="쇼핑몰 기본설정">쇼핑몰 기본설정</li>
+            <li title="쇼핑몰 회원관리" onclick="js_topnav_click('2')">쇼핑몰 회원관리</li>
+            <li title="쇼핑몰 상품관리" onclick="js_topnav_click('3')">쇼핑몰 상품관리</li>
+            <li title="쇼핑몰 기본설정" onclick="js_topnav_click('4')">쇼핑몰 기본설정</li>
         </ol>
     </div>
 </nav>
+<script src="./js/admin_top.js?v=3"></script>
