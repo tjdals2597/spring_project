@@ -19,4 +19,4 @@
         </ol>
     </div>
 </nav>
-<script src="./js/admin_top.js?v=1"></script>
+<script src="./js/admin_top.js?v=3"></script>

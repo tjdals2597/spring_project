@@ -45,4 +45,16 @@ public class admin_module {
 		keycode.put("ck", ck);
 		return this.sstm.update("shopadmin.admin_loginck", keycode);
 	}
+	
+	public homepage_dao homepageinfo_select() {
+		return this.sstm.selectOne("shopadmin.search_hp_info");
+	}
+	
+	public int hpinfo_insert(homepage_dao dao) {
+		return this.sstm.insert("shopadmin.insert_hp_info", dao);
+	}
+	
+	public int hpinfo_update(homepage_dao dao) {
+		return this.sstm.update("shopadmin.update_hp_info", dao);
+	}
 }
