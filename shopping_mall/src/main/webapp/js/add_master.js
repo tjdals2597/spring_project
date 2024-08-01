@@ -1,39 +1,62 @@
+var duplid_ck = "";
+
 function idck_ajax() {
-	var html = new XMLHttpRequest();
-	
-	html.onreadystatechange = function() {
-		if (html.readyState == 4 && html.status == 200) {
-			console.log(this.response);
-		}
+	var user_id = document.getElementById("admin_id");
+	if (user_id.value == "") {
+		alert ("아이디를 입력해주세요.");
+		user_id.focus();
 	}
-	html.open("POST", "./adminid_check.do", true);
-	html.send("adminid=" + admin_login_frm.amid.value);
+	else {
+		var html = new XMLHttpRequest();
+		duplid_ck = "";
+		
+		html.onreadystatechange = function() {
+			if (html.readyState == 4 && html.status == 200) {
+				duplid_ck = this.response;
+				if (duplid_ck == "ok") {
+					if (confirm("사용 가능한 아이디입니다.\n이 아이디를 사용하시겠습니까?")) {
+						user_id.readOnly = true;
+					}
+				}
+				else {
+					alert("사용 불가능한 아이디입니다.");
+				}
+			}
+		}
+		html.open("POST", "./adminid_check.do", true);
+		html.send("adminid=" + user_id.value);
+	}
 }
 
 function js_signsubmit() {
-	var mtel = "";
 	var mtel1 = document.getElementById("mtel1").value;
 	var mtel2 = document.getElementById("mtel2").value;
 	var mtel3 = document.getElementById("mtel3").value;
 	document.getElementById("mtelsum").value = mtel1 + mtel2 + mtel3;
 	
-	if (admin_login_frm.amid.value == "") {
-		alert("아이디를 입력해주세요.");
+	if (!admin_login_frm.amid.readOnly || admin_login_frm.amid.value == "") {
+		alert("아이디 중복 체크를 진행해주세요.");
+		admin_login_frm.amid.focus();
 	}
 	else if (admin_login_frm.ampass.value == "") {
 		alert("패스워드를 입력해주세요.");
+		admin_login_frm.ampass.focus();
 	}
 	else if (admin_login_frm.ampass.value != document.getElementById("ampassck").value) {
 		alert("동일한 패스워드를 입력해주세요.");
+		admin_login_frm.ampass.focus();
 	}
 	else if (admin_login_frm.amname.value == "") {
 		alert("이름을 입력해주세요.");
+		admin_login_frm.amname.focus();
 	}
 	else if (admin_login_frm.amemail.value == "") {
 		alert("이메일을 입력해주세요.");
+		admin_login_frm.amemail.focus();
 	}
 	else if (admin_login_frm.amphone.value == "") {
 		alert("전화번호를 입력해주세요.");
+		admin_login_frm.amphone.focus();
 	}
 	else {
 		if (confirm("작성하신 정보로 회원가입 하시겠습니까?")) {

@@ -1,6 +1,6 @@
 function js_gopage(no) {
 	if (no == 1) {
-		location.href = "./add_master.jsp";
+		location.href = "./add_master.do";
 	}
 	else if (no == 2) {
 		alert("아직 없는 페이지 입니다.");

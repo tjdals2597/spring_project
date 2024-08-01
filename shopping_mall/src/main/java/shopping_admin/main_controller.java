@@ -29,6 +29,11 @@ public class main_controller extends password_sha3 {
 		return "admin_index";
 	}
 	
+	@GetMapping("/add_master.do")
+	public String add_master() {
+		return "add_master";
+	}
+	
 	@GetMapping("/admin_main.do")
 	public String admin_main() {
 		return "admin_main";
@@ -36,8 +41,7 @@ public class main_controller extends password_sha3 {
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/adminid_check.do")
-	public void adminid_check(@RequestBody(required = false) String adminid,
-			HttpServletResponse res) throws Exception {
+	public void adminid_check(@RequestBody(required = false) String adminid, HttpServletResponse res) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		this.pw = res.getWriter();
 		try {
@@ -59,7 +63,7 @@ public class main_controller extends password_sha3 {
 			int callback = this.admd.admin_signup(dao);
 			if (callback > 0) {
 				this.pw.print("<script>alert('회원가입이 성공적으로 완료되었습니다.\n"
-						+ "최고 관리자의 승인 이후 로그인이 가능합니다.'); location.href = './admin_index.jsp';</script>");
+						+ "최고 관리자의 승인 이후 로그인이 가능합니다.'); location.href = './admin';</script>");
 			}
 		} catch (Exception e) {
 			this.pw.print("<script>alert('오류가 발생하여 회원가입이 실패하였습니다.'); history.go(-1);</script>");
@@ -75,15 +79,13 @@ public class main_controller extends password_sha3 {
 		this.pw = res.getWriter();
 		try {
 			admin_dao admindao = this.admd.admin_login(login_id, this.encodePass(login_pw));
-			if (admindao != null) {
-				if (admindao.getAmloginck().equals("Y")) {
-					htss.setAttribute("adminSessionData", admindao.toSessionList());
-					htss.setMaxInactiveInterval(1800);
-					this.pw.print("<script>alert('로그인 성공하셨습니다.'); location.href = './admin_main.do';</script>");					
-				}
-				else {
-					this.pw.print("<script>alert('관리자의 승인 이후 로그인할 수 있습니다.'); history.go(-1);</script>");
-				}
+			if (admindao.getAmloginck().equals("Y")) {
+				htss.setAttribute("adminSessionData", admindao.toSessionList());
+				htss.setMaxInactiveInterval(1800);
+				this.pw.print("<script>alert('로그인 성공하셨습니다.'); location.href = './admin_main.do';</script>");					
+			}
+			else {
+				this.pw.print("<script>alert('관리자의 승인 이후 로그인할 수 있습니다.'); history.go(-1);</script>");
 			}
 		} catch (Exception e) {
 			this.pw.print("<script>alert('아이디 및 패스워드를 확인해주세요.'); history.go(-1);</script>");
