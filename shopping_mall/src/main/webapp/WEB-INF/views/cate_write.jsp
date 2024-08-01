@@ -26,8 +26,9 @@
     <div class="cate_insert">
         <ul>
             <li>분류코드</li>
-            <li><input type="text" class="cate_input1" name="cls_code" id="classicode" readonly></li>
-            <li>※ 분류코드는 대메뉴 코드와 소메뉴 코드를 합쳐서 자동 입력 됩니다.</li>
+            <li><input type="text" class="cate_input1" name="cls_code" id="classicode"></li>
+            <li>※ 2자리 이상의 숫자로 분류코드를 입력하세요 (ex. 01, 02, 03)</li>
+            <!-- <li>※ 분류코드는 대메뉴 코드와 소메뉴 코드를 합쳐서 자동 입력 됩니다.</li> -->
         </ul>
         <ul>
             <li>대메뉴 코드</li>
@@ -78,5 +79,5 @@
 	<%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
-<script src="./js/cate_write.js?v=1"></script>
+<script src="./js/cate_write.js?v=2"></script>
 </html>

@@ -24,7 +24,7 @@
             <ul>
                 <li class="font_color1">아이디 및 패스워드 정보</li>
                 <li>
-                <input type="text" class="add_input1" name="amid" placeholder="생성할 관리자 아이디를 입력하세요">
+                <input type="text" class="add_input1" name="amid" id="admin_id" placeholder="생성할 관리자 아이디를 입력하세요">
                 <button type="button" class="btn_button" onclick="idck_ajax()">중복체크</button>
                 </li>
                 <li>
@@ -80,5 +80,5 @@
 		<%@ include file="./admin_footer.jsp" %>
     </footer>
 </body>
-<script src="./js/add_master.js?v=2"></script>
+<script src="./js/add_master.js?v=4"></script>
 </html>

@@ -7,5 +7,6 @@
 		<typeAlias alias="admindao" type="shopping_admin.admin_dao"/>
 		<typeAlias alias="homepagedao" type="shopping_admin.homepage_dao"/>
 		<typeAlias alias="categorydao" type="shopping_admin.category_dao"/>
+		<typeAlias alias="productdao" type="shopping_admin.product_dao"/>
 	</typeAliases>
 </configuration>

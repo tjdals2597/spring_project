@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cateproduct">
+
+	<select id="select_category" resultType="String">
+		select clgmenu_code from category
+	</select>
+	
+	<select id="catelist_pwpage" resultType="categorydao">
+		select cidx, clgmenu_name from category order by cidx desc
+	</select>
+	
+	<select id="select_cateall" resultType="categorydao">
+		select * from category order by cidx desc limit ${ no }, 10
+	</select>
+	
+	<select id="select_product" resultType="int">
+		select count(pcode) from product where pcode = #{pcode}
+	</select>
+	
+	<insert id="insert_product">
+		insert into product (pidx, pcateidx, pcode, pname, add_pexplain, original_price, discount_rate, 
+		discount_price, product_stock, sell_ck, early_sold_ck, pimages, detail_pexplain, pamidx, pindate) 
+		values ('0', #{pcateidx}, #{pcode}, #{pname}, #{add_pexplain}, #{original_price}, #{discount_rate}, #{discount_price}, 
+		#{product_stock}, #{sell_ck}, #{early_sold_ck}, #{pimages}, #{detail_pexplain}, #{pamidx}, now())
+	</insert>
+	
+</mapper>

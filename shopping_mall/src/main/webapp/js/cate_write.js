@@ -4,10 +4,6 @@ function go_list() {
 	}
 }
 
-function code_change(code) {
-	document.getElementById("classicode").value = code;
-}
-
 function js_cate_create() {
 	if (cate_frm.cls_code.value == "" || cate_frm.clgmenu_code.value == "") {
 		alert("대메뉴 코드를 입력하세요.");
