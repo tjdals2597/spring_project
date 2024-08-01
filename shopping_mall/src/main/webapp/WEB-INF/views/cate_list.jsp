@@ -22,7 +22,7 @@
     <section>    
 <p>카테고리관리 페이지</p>
 <div class="subpage_view">
-    <span>등록된 카테고리 0건</span>
+    <span>등록된 카테고리 ${ catecount }건</span>
     <span>
         <form>
         <select class="p_select1">

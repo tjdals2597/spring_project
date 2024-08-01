@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -22,7 +23,7 @@
 <section>
 <p>상품관리 페이지</p>
 <div class="subpage_view">
-    <span>등록된 상품 0건</span>
+    <span>등록된 상품 ${ productcount }건</span>
     <span>
         <form>
         <select class="p_select1">
@@ -49,23 +50,30 @@
         <li>품절</li>
         <li>관리</li>
     </ul>
-    <ul>
-        <li><input type="checkbox"></li>
-        <li>상품코드</li>
-        <li>이미지</li>
-        <li>상품명</li>
-        <li>카테고리 분류</li>
-        <li>34,000</li>
-        <li>30,000</li>
-        <li>11%</li>
-        <li>100</li>
-        <li>Y</li>
-        <li>N</li>
-        <li>관리</li>
-    </ul>
-    <ul>
-        <li style="width: 100%;">등록된 상품이 없습니다.</li>
-    </ul>
+    <cr:if test="${ productlist.size() == 0 }">
+	    <ul>
+	        <li style="width: 100%;">등록된 상품이 없습니다.</li>
+	    </ul>
+    </cr:if>
+    <cr:if test="${ productlist.size() != 0 }">
+    	<cr:forEach var="pdata" items="${ productlist }">
+		    <ul>
+		        <li><input type="checkbox"></li>
+		        <li>${ pdata.getPcode() }</li>
+		        <cr:set var="imgname" value="${ fn:split(pdata.getPimages(), '|') }"/>
+		        <li><a href="./product_img/${ imgname[1] }" target="_blank">이미지</a></li>
+		        <li>${ pdata.getPname() }</li>
+		        <li>${ pdata.getPcateidx() }</li>
+		        <li>${ pdata.getOriginal_price() }</li>
+		        <li>${ pdata.getDiscount_price() }</li>
+		        <li>${ pdata.getDiscount_rate() }</li>
+		        <li>${ pdata.getProduct_stock() }</li>
+		        <li>${ pdata.getSell_ck() }</li>
+		        <li>${ pdata.getEarly_sold_ck() }</li>
+		        <li>관리</li>
+		    </ul>
+    	</cr:forEach>
+	</cr:if>
 </div>
 <div class="subpage_view3">
     <ul class="pageing">

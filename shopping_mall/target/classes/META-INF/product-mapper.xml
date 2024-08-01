@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cateproduct">
-
+	
+	<select id="select_count" resultType="int">
+		select count(*) from ${table}
+		<if test='part=="1"'>
+			 where pcode = #{pcode}
+		</if>
+	</select>
+	
 	<select id="select_category" resultType="String">
 		select clgmenu_code from category
 	</select>
@@ -14,9 +21,14 @@
 		select * from category order by cidx desc limit ${ no }, 10
 	</select>
 	
-	<select id="select_product" resultType="int">
-		select count(pcode) from product where pcode = #{pcode}
+	<select id="select_prodall" resultType="productdao">
+		select * from product order by pidx desc limit ${ no }, 10
 	</select>
+	
+	<insert id="insert_category">
+		insert into category (cidx, cls_code, clgmenu_code, clgmenu_name, use_ck, camidx) 
+		values ('0', #{cls_code}, #{clgmenu_code}, #{clgmenu_name}, #{use_ck}, #{camidx})
+	</insert>
 	
 	<insert id="insert_product">
 		insert into product (pidx, pcateidx, pcode, pname, add_pexplain, original_price, discount_rate, 

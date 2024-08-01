@@ -29,7 +29,7 @@ public class product_controller {
 	
 	@GetMapping("/product_list.do")
 	public String product_list(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
-			HttpServletResponse res, Model m) throws Exception {
+			@RequestParam(defaultValue = "", required = false) String pageno, HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		if (adata == null) {
 			this.pw = res.getWriter();
@@ -37,7 +37,9 @@ public class product_controller {
 			this.pw.close();
 		}
 		else {
-			m.addAttribute("productlist", "");
+			Integer no = (pageno.equals("")) ? 1 : Integer.valueOf(pageno);
+			m.addAttribute("productlist", this.pdmd.product_search(no));
+			m.addAttribute("productcount", this.pdmd.product_count());
 		}
 		return "product_list";
 	}
@@ -69,6 +71,7 @@ public class product_controller {
 		else {
 			Integer no = (pageno.equals("")) ? 1 : Integer.valueOf(pageno);
 			m.addAttribute("categorylist", this.pdmd.category_search(no));
+			m.addAttribute("catecount", this.pdmd.category_count());
 		}
 		return "cate_list";
 	}
@@ -119,6 +122,25 @@ public class product_controller {
 			int callback = this.pdmd.write_product(dao);
 			if (callback > 0) {
 				this.pw.print("<script>alert('상품이 정상적으로 등록되었습니다.'); location.href = '/product_list.do';</script>");
+			}
+			else {
+				this.pw.print("<script>alert('데이터 오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
+			}
+		} catch (Exception e) {
+			this.pw.print("<script>alert('오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
+		} finally {
+			this.pw.close();
+		}
+	}
+	
+	@PostMapping("/cate_writeok.do")
+	public void category_insert(@ModelAttribute category_dao dao, HttpServletResponse res) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		this.pw = res.getWriter();
+		try {
+			int callback = this.pdmd.write_category(dao);
+			if (callback > 0) {
+				this.pw.print("<script>alert('카테고리가 정상적으로 등록되었습니다.'); location.href = '/cate_list.do';</script>");
 			}
 			else {
 				this.pw.print("<script>alert('데이터 오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
