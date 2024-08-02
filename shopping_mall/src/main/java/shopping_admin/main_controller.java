@@ -34,11 +34,6 @@ public class main_controller extends password_sha3 {
 		return "add_master";
 	}
 	
-	@GetMapping("/admin_main.do")
-	public String admin_main() {
-		return "admin_main";
-	}
-	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/adminid_check.do")
 	public void adminid_check(@RequestBody(required = false) String adminid, HttpServletResponse res) throws Exception {
@@ -54,8 +49,8 @@ public class main_controller extends password_sha3 {
 		}
 	}
 	
-	@PostMapping("/admin_main.do")
-	public void admin_main(@ModelAttribute admin_dao dao, HttpServletResponse res) throws Exception {
+	@PostMapping("/admin_signup.do")
+	public void admin_signup(@ModelAttribute admin_dao dao, HttpServletResponse res) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		this.pw = res.getWriter();
 		try {
@@ -123,7 +118,7 @@ public class main_controller extends password_sha3 {
 		return "admin_list";
 	}
 	
-	@GetMapping("admin_siteinfo.do")
+	@GetMapping("/admin_siteinfo.do")
 	public String admin_siteinfo(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
 			HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");

@@ -12,14 +12,16 @@ import org.springframework.stereotype.Repository;
 @Repository("adminmodule")
 public class admin_module {
 
+	Map<String, String> keycode = null;
+	
 	@Resource(name = "shoptemplate")
 	private SqlSessionTemplate sstm;
 	
 	public String duplicate_idck(String id) {
-		Map<String, String> keycode = new HashMap<String, String>();
-		keycode.put("part", "1");
-		keycode.put("amid", id);
-		admin_dao dao = this.sstm.selectOne("shopadmin.search", keycode);
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("part", "1");
+		this.keycode.put("amid", id);
+		admin_dao dao = this.sstm.selectOne("shopadmin.search", this.keycode);
 		return (dao == null) ? "ok" : "error";
 	}
 	
@@ -28,11 +30,11 @@ public class admin_module {
 	}
 	
 	public admin_dao admin_login(String id, String pw) {
-		Map<String, String> keycode = new HashMap<String, String>();
-		keycode.put("part", "2");
-		keycode.put("amid", id);
-		keycode.put("ampass", pw);
-		return this.sstm.selectOne("shopadmin.search", keycode);
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("part", "2");
+		this.keycode.put("amid", id);
+		this.keycode.put("ampass", pw);
+		return this.sstm.selectOne("shopadmin.search", this.keycode);
 	}
 	
 	public List<admin_dao> list_select() {
@@ -40,10 +42,10 @@ public class admin_module {
 	}
 	
 	public int loginck_update(String amidx, String ck) {
-		Map<String, String> keycode = new HashMap<String, String>();
-		keycode.put("amidx", amidx);
-		keycode.put("ck", ck);
-		return this.sstm.update("shopadmin.admin_loginck", keycode);
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("amidx", amidx);
+		this.keycode.put("ck", ck);
+		return this.sstm.update("shopadmin.admin_loginck", this.keycode);
 	}
 	
 	public homepage_dao homepageinfo_select() {

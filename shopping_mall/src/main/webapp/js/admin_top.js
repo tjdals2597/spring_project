@@ -11,4 +11,7 @@ function js_topnav_click(no) {
 	else if (no == 4) {
 		location.href = "./admin_siteinfo.do";
 	}
+	else if (no == 5) {
+		location.href = "./notice_list.do";
+	}
 }

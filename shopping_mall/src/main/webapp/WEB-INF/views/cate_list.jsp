@@ -19,24 +19,26 @@
 <body>
 <%@ include file="./admin_top.jsp" %>
 <main class="maincss">
-    <section>    
+<section>    
 <p>카테고리관리 페이지</p>
+<form id="search_frm" onsubmit="return js_search('cate')">
 <div class="subpage_view">
     <span>등록된 카테고리 ${ catecount }건</span>
     <span>
-        <form>
-        <select class="p_select1">
-            <option>카테고리명</option>
-            <option>카테고리코드</option>
+        <select class="p_select1" name="search_part">
+            <option value="clgmenu_name">카테고리명</option>
+            <option value="clgmenu_code">카테고리코드</option>
         </select>
-        <input type="text" class="p_input1" placeholder="검색어를 입력해 주세요">
+        <input type="text" name="search_word" value="${ search_word }" class="p_input1" placeholder="검색어를 입력해 주세요">
         <input type="submit" value="검색" title="카테고리 검색" class="p_submit">
-        </form>
     </span>
 </div>
+</form>
+<form id="checkbox_frm">
+<input type="hidden" name="page_ck" value="category">
 <div class="subpage_view2">
     <ul>
-        <li><input type="checkbox"></li>
+        <li><input type="checkbox" id="all_ck" onclick="checkbox_allck()"></li>
         <li>분류코드</li>
         <li>대메뉴 코드</li>
         <li>대메뉴명</li>
@@ -53,7 +55,7 @@
     <cr:if test="${ categorylist.size() != 0 }">
     	<cr:forEach var="catedata" items="${ categorylist }">
 		    <ul>
-		        <li><input type="checkbox"></li>
+		        <li><input type="checkbox" name="del_ck" value="${ catedata.getCidx() }" onclick="checkbox_eachck()"></li>
 		        <li style="text-align: left; text-indent: 5px;">${ catedata.getCls_code() }</li>
 		        <li>${ catedata.getClgmenu_code() }</li>
 		        <li style="text-align: left; text-indent: 5px;">${ catedata.getClgmenu_name() }</li>
@@ -65,6 +67,7 @@
     	</cr:forEach>
     </cr:if>
 </div>
+</form>
 <div class="subpage_view3">
     <ul class="pageing">
         <li><img src="./ico/double_left.svg"></li>
@@ -75,10 +78,10 @@
     </ul>
 </div>
 <div class="subpage_view4">
-    <input type="button" value="카테고리 삭제" title="카테고리 삭제" class="p_button">
+    <input type="button" value="카테고리 삭제" title="카테고리 삭제" onclick="check_delete()" class="p_button">
     <span style="float: right;">
-    <input type="button" value="상품 리스트" title="상품 리스트" onclick="location.href='./product_list.do';" class="p_button p_button_color1">
-    <input type="button" value="카테고리 등록" title="카테고리 등록" onclick="location.href='./cate_write.do';" class="p_button p_button_color2">
+    <input type="button" value="상품 리스트" title="상품 리스트" onclick="go_lpage()" class="p_button p_button_color1">
+    <input type="button" value="카테고리 등록" title="카테고리 등록" onclick="go_wpage()" class="p_button p_button_color2">
     </span>
 </div>
 </section>
@@ -87,4 +90,19 @@
 	<%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
+<script src="./js/list_search.js?v=1"></script>
+<script src="./js/list_checkbox.js?v=1"></script>
+<script>
+	function go_lpage() {
+		location.href='./product_list.do';
+	}
+	function go_wpage() {
+		location.href='./cate_write.do';
+	}
+	var ck = "${ search_part }";
+	if (ck == "") {
+		ck = "clgmenu_name";
+	}
+	search_frm.search_part.value = ck;
+</script>
 </html>

@@ -1,0 +1,43 @@
+var delck = document.getElementsByName("del_ck");
+var allck = document.getElementById("all_ck");
+var count = 0;
+function checkbox_allck() {
+	var w = 0;
+	while (w < delck.length) {
+		delck[w].checked = allck.checked;
+		if (delck[w].checked) {
+			count++;
+		}
+		w++;
+	}
+}
+
+function checkbox_eachck() {
+	count = 0;
+	var w = 0;
+	while (w < delck.length) {
+		if (delck[w].checked) {
+			count++;
+		}
+		w++;
+	}
+	if (count == delck.length) {
+		allck.checked = true;
+	}
+	else {
+		allck.checked = false;
+	}
+}
+
+function check_delete() {
+	if (count < 1) {
+		alert("선택한 항목이 존재하지 않습니다.");
+	}
+	else {
+		if (confirm("정말로 선택한 항목을 삭제하시겠습니까?")) {
+			checkbox_frm.method = "POST";
+			checkbox_frm.action = "./checkbox_delete.do";
+			checkbox_frm.submit();
+		}
+	}
+}

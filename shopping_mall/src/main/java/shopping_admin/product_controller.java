@@ -29,6 +29,8 @@ public class product_controller {
 	
 	@GetMapping("/product_list.do")
 	public String product_list(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
+			@RequestParam(defaultValue = "", required = false) String search_part,
+			@RequestParam(defaultValue = "", required = false) String search_word,
 			@RequestParam(defaultValue = "", required = false) String pageno, HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		if (adata == null) {
@@ -38,8 +40,16 @@ public class product_controller {
 		}
 		else {
 			Integer no = (pageno.equals("")) ? 1 : Integer.valueOf(pageno);
-			m.addAttribute("productlist", this.pdmd.product_search(no));
-			m.addAttribute("productcount", this.pdmd.product_count());
+			if (search_part.equals("") || search_word.equals("")) {
+				m.addAttribute("productlist", this.pdmd.product_search(no));
+				m.addAttribute("productcount", this.pdmd.product_count());
+			}
+			else {
+				m.addAttribute("search_part", search_part);
+				m.addAttribute("search_word", search_word);
+				m.addAttribute("productlist", this.pdmd.product_search(no, search_part, search_word));
+				m.addAttribute("productcount", this.pdmd.product_count());
+			}
 		}
 		return "product_list";
 	}
@@ -61,6 +71,8 @@ public class product_controller {
 	
 	@GetMapping("/cate_list.do")
 	public String cate_list(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
+			@RequestParam(defaultValue = "", required = false) String search_part,
+			@RequestParam(defaultValue = "", required = false) String search_word,
 			@RequestParam(defaultValue = "", required = false) String pageno, HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		if (adata == null) {
@@ -70,8 +82,17 @@ public class product_controller {
 		}
 		else {
 			Integer no = (pageno.equals("")) ? 1 : Integer.valueOf(pageno);
-			m.addAttribute("categorylist", this.pdmd.category_search(no));
-			m.addAttribute("catecount", this.pdmd.category_count());
+			if (search_part.equals("") || search_word.equals("")) {
+				m.addAttribute("categorylist", this.pdmd.category_search(no));
+				m.addAttribute("catecount", this.pdmd.category_count());
+			}
+			else {
+				m.addAttribute("search_part", search_part);
+				m.addAttribute("search_word", search_word);
+				m.addAttribute("categorylist", this.pdmd.category_search(no, search_part, search_word));
+				m.addAttribute("catecount", this.pdmd.category_count());
+			}
+			
 		}
 		return "cate_list";
 	}
@@ -89,6 +110,27 @@ public class product_controller {
 			m.addAttribute("menulist", this.pdmd.catemenu_search());
 		}
 		return "cate_write";
+	}
+	
+	@PostMapping("checkbox_delete.do")
+	public void checkbox_delete(@RequestParam int del_ck[], HttpServletResponse res, String page_ck) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		try {
+			this.pw = res.getWriter();
+			
+			int callback = this.pdmd.del_list_ckbox(del_ck, page_ck);
+			if (callback > 0) {
+				String pagename = page_ck.equals("category") ? "cate" : page_ck;
+				this.pw.print("<script>alert('정상적으로 항목이 삭제되었습니다.'); location.href = './" + pagename + "_list.do';</script>");
+			}
+			else {
+				this.pw.print("<script>alert('오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
+			}
+		} catch (Exception e) {
+			this.pw.print("<script>alert('상품이 있는 카테고리는 삭제할 수 없습니다.'); history.go(-1);</script>");
+		} finally {
+			this.pw.close();
+		}
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")

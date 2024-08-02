@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Repository("productmodule")
 public class product_module {
@@ -22,9 +23,17 @@ public class product_module {
 	}
 	
 	public List<category_dao> category_search(Integer no) {
-		Map<String, Integer> keycodeno = new HashMap<String, Integer>();
-		keycodeno.put("no", (no - 1) * 10);
-		return this.sstm.selectList("cateproduct.select_cateall", keycodeno);
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("no", String.valueOf((no - 1) * 10));
+		return this.sstm.selectList("cateproduct.select_cateall", this.keycode);
+	}
+	
+	public List<category_dao> category_search(Integer no, String search_part, String search_word) {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("no", String.valueOf((no - 1) * 10));
+		this.keycode.put("search_part", search_part);
+		this.keycode.put("search_word", search_word);
+		return this.sstm.selectList("cateproduct.select_catesearch", this.keycode);
 	}
 	
 	public int category_count() {
@@ -33,16 +42,43 @@ public class product_module {
 		return this.sstm.selectOne("cateproduct.select_count", this.keycode);
 	}
 	
-	public List<product_dao> product_search(Integer no) { // 미완성
-		Map<String, Integer> keycodeno = new HashMap<String, Integer>();
-		keycodeno.put("no", (no - 1) * 10);
-		return this.sstm.selectList("cateproduct.select_prodall", keycodeno);
+	public List<product_dao> product_search(Integer no) {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("no", String.valueOf((no - 1) * 10));
+		return this.sstm.selectList("cateproduct.select_prodall", this.keycode);
+	}
+	
+	public List<product_dao> product_search(Integer no, String search_part, String search_word) {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("no", String.valueOf((no - 1) * 10));
+		this.keycode.put("search_part", search_part);
+		this.keycode.put("search_word", search_word);
+		return this.sstm.selectList("cateproduct.select_prodsearch", this.keycode);
 	}
 	
 	public int product_count() {
 		this.keycode = new HashMap<String, String>();
 		this.keycode.put("table", "product");
 		return this.sstm.selectOne("cateproduct.select_count", this.keycode);
+	}
+	
+	public int del_list_ckbox(int del_ck[], String page_ck) {
+		StringBuilder sb = new StringBuilder();
+		int w = 0;
+		while (w < del_ck.length) {
+			if (w == 0) {
+				sb.append(del_ck[w]);				
+			}
+			else {
+				sb.append(","+del_ck[w]);
+			}
+			w++;
+		}
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("table", page_ck);
+		this.keycode.put("column", page_ck.equals("product") ? "pidx" : "cidx");
+		this.keycode.put("datalist", sb.toString());
+		return this.sstm.delete("cateproduct.cateprod_ckbox", this.keycode);
 	}
 	
 	public List<category_dao> catelist_search() {
@@ -52,7 +88,7 @@ public class product_module {
 	public int duplicate_codeck(String code) {
 		this.keycode = new HashMap<String, String>();
 		this.keycode.put("part", "1");
-		this.keycode.put("table", "category");
+		this.keycode.put("table", "product");
 		this.keycode.put("pcode", code);
 		return this.sstm.selectOne("cateproduct.select_count", this.keycode);
 	}

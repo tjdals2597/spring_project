@@ -16,7 +16,8 @@
             <li title="쇼핑몰 회원관리" onclick="js_topnav_click('2')">쇼핑몰 회원관리</li>
             <li title="쇼핑몰 상품관리" onclick="js_topnav_click('3')">쇼핑몰 상품관리</li>
             <li title="쇼핑몰 기본설정" onclick="js_topnav_click('4')">쇼핑몰 기본설정</li>
+            <li title="쇼핑몰 공지관리" onclick="js_topnav_click('5')">쇼핑몰 공지관리</li>
         </ol>
     </div>
 </nav>
-<script src="./js/admin_top.js?v=3"></script>
+<script src="./js/admin_top.js?v=4"></script>

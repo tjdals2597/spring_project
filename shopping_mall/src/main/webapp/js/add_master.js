@@ -61,7 +61,7 @@ function js_signsubmit() {
 	else {
 		if (confirm("작성하신 정보로 회원가입 하시겠습니까?")) {
 			admin_login_frm.method = "POST";
-			admin_login_frm.action = "./admin_main.do";
+			admin_login_frm.action = "./admin_signup.do";
 			admin_login_frm.submit();
 		}
 	}

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cateproduct">
 	
-	<select id="select_count" resultType="int">
+	<select id="select_count" resultType="int" parameterType="Map">
 		select count(*) from ${table}
 		<if test='part=="1"'>
 			 where pcode = #{pcode}
@@ -17,12 +17,22 @@
 		select cidx, clgmenu_name from category order by cidx desc
 	</select>
 	
+	<select id="select_catesearch" resultType="categorydao">
+		select * from category where ${search_part} like concat('%', #{search_word}, '%') 
+		order by cidx desc limit ${ no }, 10
+	</select>
+	
 	<select id="select_cateall" resultType="categorydao">
 		select * from category order by cidx desc limit ${ no }, 10
 	</select>
 	
+	<select id="select_prodsearch" resultType="productdao">
+		select * from product_cate where ${search_part} like concat('%', #{search_word}, '%') 
+		order by pidx desc limit ${ no }, 10
+	</select>
+	
 	<select id="select_prodall" resultType="productdao">
-		select * from product order by pidx desc limit ${ no }, 10
+		select * from product_cate order by pidx desc limit ${ no }, 10
 	</select>
 	
 	<insert id="insert_category">
@@ -36,5 +46,9 @@
 		values ('0', #{pcateidx}, #{pcode}, #{pname}, #{add_pexplain}, #{original_price}, #{discount_rate}, #{discount_price}, 
 		#{product_stock}, #{sell_ck}, #{early_sold_ck}, #{pimages}, #{detail_pexplain}, #{pamidx}, now())
 	</insert>
+	
+	<delete id="cateprod_ckbox">
+		delete from ${table} where FIND_IN_SET(${column}, #{datalist})
+	</delete>
 	
 </mapper>

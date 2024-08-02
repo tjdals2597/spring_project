@@ -22,22 +22,24 @@
 <main class="maincss">
 <section>
 <p>상품관리 페이지</p>
+<form id="search_frm" onsubmit="return js_search('product')">
 <div class="subpage_view">
     <span>등록된 상품 ${ productcount }건</span>
     <span>
-        <form>
-        <select class="p_select1">
-            <option>상품명</option>
-            <option>상품코드</option>
+        <select class="p_select1" name="search_part">
+	        <option value="pname">상품명</option>
+	        <option value="pcode">상품코드</option>
         </select>
-        <input type="text" class="p_input1" placeholder="검색어를 입력해 주세요">
+        <input type="text" name="search_word" value="${ search_word }" class="p_input1" placeholder="검색어를 입력해 주세요">
         <input type="submit" value="검색" title="상품검색" class="p_submit">
-        </form>
     </span>
 </div>
+</form>
+<form id="checkbox_frm">
+<input type="hidden" name="page_ck" value="product">
 <div class="subpage_view2">
     <ul>
-        <li><input type="checkbox"></li>
+        <li><input type="checkbox" id="all_ck" onclick="checkbox_allck()"></li>
         <li>코드</li>
         <li>이미지</li>
         <li>상품명</li>
@@ -58,12 +60,12 @@
     <cr:if test="${ productlist.size() != 0 }">
     	<cr:forEach var="pdata" items="${ productlist }">
 		    <ul>
-		        <li><input type="checkbox"></li>
+		        <li><input type="checkbox" name="del_ck" value="${ pdata.getPidx() }" onclick="checkbox_eachck()"></li>
 		        <li>${ pdata.getPcode() }</li>
 		        <cr:set var="imgname" value="${ fn:split(pdata.getPimages(), '|') }"/>
 		        <li><a href="./product_img/${ imgname[1] }" target="_blank">이미지</a></li>
 		        <li>${ pdata.getPname() }</li>
-		        <li>${ pdata.getPcateidx() }</li>
+		        <li>${ pdata.getClgmenu_name() }</li>
 		        <li>${ pdata.getOriginal_price() }</li>
 		        <li>${ pdata.getDiscount_price() }</li>
 		        <li>${ pdata.getDiscount_rate() }</li>
@@ -75,6 +77,7 @@
     	</cr:forEach>
 	</cr:if>
 </div>
+</form>
 <div class="subpage_view3">
     <ul class="pageing">
         <li><img src="./ico/double_left.svg"></li>
@@ -85,10 +88,10 @@
     </ul>
 </div>
 <div class="subpage_view4">
-    <input type="button" value="선택상품 삭제" title="선택상품 삭제" class="p_button">
+    <input type="button" value="선택상품 삭제" title="선택상품 삭제" onclick="check_delete()" class="p_button">
     <span style="float: right;">
-    <input type="button" value="신규상품 등록" title="신규상품 등록" onclick="location.href='./product_write.do';" class="p_button p_button_color1">
-    <input type="button" value="카테고리 등록" title="카테고리 등록" onclick="location.href='./cate_list.do';" class="p_button p_button_color2">
+    <input type="button" value="신규상품 등록" title="신규상품 등록" onclick="go_wpage()" class="p_button p_button_color1">
+    <input type="button" value="카테고리 등록" title="카테고리 등록" onclick="go_lpage()" class="p_button p_button_color2">
     </span>
 </div>
 </section>
@@ -97,4 +100,19 @@
     <%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
+<script src="./js/list_search.js?v=1"></script>
+<script src="./js/list_checkbox.js?v=1"></script>
+<script>
+	function go_lpage() {
+		location.href='./cate_list.do';
+	}
+	function go_wpage() {
+		location.href='./product_write.do';
+	}
+	var ck = "${ search_part }";
+	if (ck == "") {
+		ck = "pname";
+	}
+	search_frm.search_part.value = ck;
+</script>
 </html>
