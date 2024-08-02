@@ -10,15 +10,17 @@
     <link rel="stylesheet" type="text/css" href="./css/basic.css">
     <link rel="stylesheet" type="text/css" href="./css/login.css?v=10">
     <link rel="stylesheet" type="text/css" href="./css/main.css?v=10">
-    <link rel="stylesheet" type="text/css" href="./css/notice.css?v=10">
+    <link rel="stylesheet" type="text/css" href="./css/notice.css?v=11">
+    <link rel="stylesheet" type="text/css" href="./css/editor_style.css?v=2">
     <link rel="icon" href="./img/logo.png" sizes="128x128">
     <link rel="icon" href="./img/logo.png" sizes="64x64">
     <link rel="icon" href="./img/logo.png" sizes="32x32">
     <link rel="icon" href="./img/logo.png" sizes="16x16">
-    <script src="./js/ckeditor/ckeditor.js"></script>
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css" />
 </head>
 <body>
 <%@ include file="./admin_top.jsp" %>
+<form id="notice_frm">
 <main class="maincss">
 <section>
     <p>공지사항 등록페이지</p>
@@ -50,27 +52,35 @@
 <ul class="ul_height">
     <li>공지내용</li>
     <li>
-        <textarea id="editor_ck" class="notice_input3" placeholder="공지내용을 입력하세요!"></textarea>
+    	<div class="main-container">
+	    	<div class="editor-container editor-container_classic-editor editor-container_include-style" id="editor-container">
+		    	<div class="editor-container__editor">
+		        	<textarea id="editor" class="notice_input3" name="ckeditor_text"></textarea>
+		        </div>
+	        </div>
+        </div>
     </li>
 </ul>
 </div>
 <div class="board_btn">
-    <button class="border_del">공지목록</button>
-    <button class="border_add">공지등록</button>
+    <button class="border_del" onclick="golpage()">공지목록</button>
+    <button class="border_add" onclick="notice_save()">공지등록</button>
 </div>
 </section>
 </main>
+</form>
 <footer class="main_copyright">
 	<%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
 <script src="./js/notice_write.js?v=1"></script>
-<script>
-window.onload = function() {
-	CKEDITOR.replace("editor_ck", {
-		width: 800,
-		height: 300
-	});
-}
+<script type="importmap">
+	{
+		"imports": {
+			"ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.js",
+			"ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.2/"
+		}
+	}
 </script>
+<script type="module" src="./js/ckeditor_main.js?v=1"></script>
 </html>
