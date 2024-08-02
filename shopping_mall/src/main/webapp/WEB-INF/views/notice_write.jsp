@@ -65,4 +65,12 @@
 </footer>
 </body>
 <script src="./js/notice_write.js?v=1"></script>
+<script>
+window.onload = function() {
+	CKEDITOR.replace("editor_ck", {
+		width: 800,
+		height: 300
+	});
+}
+</script>
 </html>
