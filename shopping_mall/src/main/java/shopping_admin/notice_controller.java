@@ -4,12 +4,17 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class notice_controller {
@@ -29,7 +34,7 @@ public class notice_controller {
 			this.pw.close();
 		}
 		else {
-			m.addAttribute("", "");
+			m.addAttribute("noticelist", this.ntmd.notice_listall());
 		}
 		return "notice_list";
 	}
@@ -44,8 +49,33 @@ public class notice_controller {
 			this.pw.close();
 		}
 		else {
-			m.addAttribute("a", adata.get(0));
+			m.addAttribute("loginIdx", adata.get(0));
+			m.addAttribute("loginName", adata.get(3));
 		}
 		return "notice_write";
+	}
+	
+	@PostMapping("/notice_writeok.do")
+	public void notice_writeok(@RequestParam("mfile") MultipartFile nfile, @ModelAttribute notice_dao dao,
+			HttpServletRequest req, HttpServletResponse res) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		this.pw = res.getWriter();
+		try {
+			if (dao.getAlert_ck() == null) {
+				dao.setAlert_ck("N");
+			}
+			dao.setNfile(new files_save().fsave(req, nfile, "/notice_file/"));
+			int callback = this.ntmd.submit_notice(dao);
+			if (callback > 0) {
+				this.pw.print("<script>alert('공지사항이 정상적으로 등록되었습니다.'); location.href = '/notice_list.do';</script>");
+			}
+			else {
+				this.pw.print("<script>alert('데이터 오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
+			}
+		} catch (Exception e) {
+			this.pw.print("<script>alert('오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
+		} finally {
+			this.pw.close();
+		}
 	}
 }

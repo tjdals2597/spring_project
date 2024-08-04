@@ -2,7 +2,6 @@ package shopping_admin;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -113,11 +112,13 @@ public class product_controller {
 	}
 	
 	@PostMapping("checkbox_delete.do")
-	public void checkbox_delete(@RequestParam int del_ck[], HttpServletResponse res, String page_ck) throws Exception {
+	public void checkbox_delete(@RequestParam int del_ck[], HttpServletRequest req, HttpServletResponse res, String page_ck) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		try {
 			this.pw = res.getWriter();
-			
+			if (page_ck.equals("product")) {
+				new files_delete(req, pdmd, del_ck);
+			}
 			int callback = this.pdmd.del_list_ckbox(del_ck, page_ck);
 			if (callback > 0) {
 				String pagename = page_ck.equals("category") ? "cate" : page_ck;
@@ -160,7 +161,7 @@ public class product_controller {
 		res.setContentType("text/html; charset=UTF-8");
 		this.pw = res.getWriter();
 		try {
-			dao.setPimages(new files_save().fsave(req, files));
+			dao.setPimages(new files_save().fsave(req, files, "/product_img/"));
 			int callback = this.pdmd.write_product(dao);
 			if (callback > 0) {
 				this.pw.print("<script>alert('상품이 정상적으로 등록되었습니다.'); location.href = '/product_list.do';</script>");

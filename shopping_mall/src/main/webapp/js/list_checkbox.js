@@ -34,7 +34,7 @@ function check_delete() {
 		alert("선택한 항목이 존재하지 않습니다.");
 	}
 	else {
-		if (confirm("정말로 선택한 항목을 삭제하시겠습니까?")) {
+		if (confirm("삭제 시, 해당 데이터는 복구할 수 없습니다.\n정말로 선택한 항목을 삭제하시겠습니까?")) {
 			checkbox_frm.method = "POST";
 			checkbox_frm.action = "./checkbox_delete.do";
 			checkbox_frm.submit();

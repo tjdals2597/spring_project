@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,17 +31,23 @@
         <li>날짜</li>
         <li>조회</li>
     </ul>
-    <ol>
-        <li><input type="checkbox" name="del_ck" value="" onclick="checkbox_eachck()"></li>
-        <li>1</li>
-        <li>테스트 제목</li>
-        <li>관리자</li>
-        <li>2024-08-17</li>
-        <li>100</li>
-    </ol>
-    <ol class="none_text">
-        <li>등록된 공지 내용이 없습니다.</li>
-    </ol>
+    <cr:if test="${ noticelist.size() == 0 }">
+	    <ol class="none_text">
+	        <li>등록된 공지 내용이 없습니다.</li>
+	    </ol>
+    </cr:if>
+    <cr:if test="${ noticelist.size() != 0 }">
+    	<cr:forEach var="notidata" items="${ noticelist }" varStatus="stat">
+		    <ol>
+		        <li><input type="checkbox" name="del_ck" value="" onclick="checkbox_eachck()"></li>
+		        <li>${ stat.count }</li>
+		        <li>${ notidata.getNtitle() }</li>
+		        <li>${ notidata.getNamname() }</li>
+		        <li>${ fn:substring(notidata.getNindate(), 0, 10) }</li>
+		        <li>${ notidata.getNviews() }</li>
+		    </ol>
+		</cr:forEach>
+	</cr:if>
     </div>
     <div class="board_btn">
         <button class="border_del" onclick="check_delete()">공지삭제</button>
@@ -61,7 +68,7 @@
 	<%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
-<script src="./js/list_checkbox.js?v=1"></script>
+<script src="./js/list_checkbox.js?v=2"></script>
 <script>
 	function go_page() {
 		location.href = "./notice_write.do";

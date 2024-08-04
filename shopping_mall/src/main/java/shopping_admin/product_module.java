@@ -63,21 +63,10 @@ public class product_module {
 	}
 	
 	public int del_list_ckbox(int del_ck[], String page_ck) {
-		StringBuilder sb = new StringBuilder();
-		int w = 0;
-		while (w < del_ck.length) {
-			if (w == 0) {
-				sb.append(del_ck[w]);				
-			}
-			else {
-				sb.append(","+del_ck[w]);
-			}
-			w++;
-		}
 		this.keycode = new HashMap<String, String>();
 		this.keycode.put("table", page_ck);
 		this.keycode.put("column", page_ck.equals("product") ? "pidx" : "cidx");
-		this.keycode.put("datalist", sb.toString());
+		this.keycode.put("datalist", this.arrToString(del_ck));
 		return this.sstm.delete("cateproduct.cateprod_ckbox", this.keycode);
 	}
 	
@@ -99,5 +88,24 @@ public class product_module {
 	
 	public int write_category(category_dao dao) {
 		return this.sstm.insert("cateproduct.insert_category", dao);
+	}
+	
+	public List<String> img_select(int idx[]) {
+		return this.sstm.selectList("cateproduct.select_file", this.arrToString(idx));
+	}
+	
+	public String arrToString(int arr[]) {
+		StringBuilder sb = new StringBuilder();
+		int w = 0;
+		while (w < arr.length) {
+			if (w == 0) {
+				sb.append(arr[w]);				
+			}
+			else {
+				sb.append(","+arr[w]);
+			}
+			w++;
+		}
+		return sb.toString();
 	}
 }

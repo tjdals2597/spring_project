@@ -63,7 +63,7 @@
 		        <li><input type="checkbox" name="del_ck" value="${ pdata.getPidx() }" onclick="checkbox_eachck()"></li>
 		        <li>${ pdata.getPcode() }</li>
 		        <cr:set var="imgname" value="${ fn:split(pdata.getPimages(), '|') }"/>
-		        <li><a href="./product_img/${ imgname[1] }" target="_blank">이미지</a></li>
+		        <li><a href="./product_img/${ imgname[1] }" title="${ imgname[0] }" target="_blank">이미지</a></li>
 		        <li>${ pdata.getPname() }</li>
 		        <li>${ pdata.getClgmenu_name() }</li>
 		        <li>${ pdata.getOriginal_price() }</li>
@@ -101,7 +101,7 @@
 </footer>
 </body>
 <script src="./js/list_search.js?v=1"></script>
-<script src="./js/list_checkbox.js?v=1"></script>
+<script src="./js/list_checkbox.js?v=2"></script>
 <script>
 	function go_lpage() {
 		location.href='./cate_list.do';

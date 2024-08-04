@@ -1,5 +1,7 @@
 package shopping_admin;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -14,4 +16,14 @@ public class notice_module {
 	
 	@Resource(name = "shoptemplate")
 	private SqlSessionTemplate sstm;
+	
+	public List<notice_dao> notice_listall() {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("part", "1");
+		return this.sstm.selectList("shopnotice.all_notice_select", this.keycode);
+	}
+	
+	public int submit_notice(notice_dao dao) {
+		return this.sstm.insert("shopnotice.notice_write", dao);
+	}
 }

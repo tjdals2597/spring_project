@@ -11,9 +11,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class files_save {
 	
-	public String fsave(HttpServletRequest req, MultipartFile files[]) throws Exception {
+	public String fsave(HttpServletRequest req, MultipartFile files, String foldername) throws Exception {
+		MultipartFile farr[] = { files };
+		return fsave(req, farr, foldername);
+	}
+	
+	public String fsave(HttpServletRequest req, MultipartFile files[], String foldername) throws Exception {
 		StringBuilder sb = new StringBuilder();
-		String furl = req.getServletContext().getRealPath("/product_img/");
+		String furl = req.getServletContext().getRealPath(foldername);
 		int w = 0;
 		do {
 			if (files[w].getSize() > 0) {

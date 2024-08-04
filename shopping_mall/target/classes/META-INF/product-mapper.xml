@@ -35,6 +35,10 @@
 		select * from product_cate order by pidx desc limit ${ no }, 10
 	</select>
 	
+	<select id="select_file" resultType="String">
+		select pimages from product where FIND_IN_SET(pidx, #{pidx})
+	</select>
+	
 	<insert id="insert_category">
 		insert into category (cidx, cls_code, clgmenu_code, clgmenu_name, use_ck, camidx) 
 		values ('0', #{cls_code}, #{clgmenu_code}, #{clgmenu_name}, #{use_ck}, #{camidx})

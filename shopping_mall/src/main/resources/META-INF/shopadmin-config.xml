@@ -8,5 +8,6 @@
 		<typeAlias alias="homepagedao" type="shopping_admin.homepage_dao"/>
 		<typeAlias alias="categorydao" type="shopping_admin.category_dao"/>
 		<typeAlias alias="productdao" type="shopping_admin.product_dao"/>
+		<typeAlias alias="noticedao" type="shopping_admin.notice_dao"/>
 	</typeAliases>
 </configuration>

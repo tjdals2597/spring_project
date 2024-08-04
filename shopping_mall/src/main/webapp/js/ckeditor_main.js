@@ -1,13 +1,11 @@
 import {
 	ClassicEditor,
 	AccessibilityHelp,
-	Alignment,
 	Autoformat,
 	AutoLink,
 	Autosave,
 	BlockQuote,
 	Bold,
-	CodeBlock,
 	Essentials,
 	FindAndReplace,
 	GeneralHtmlSupport,
@@ -19,6 +17,14 @@ import {
 	Link,
 	Paragraph,
 	SelectAll,
+	SpecialCharacters,
+	SpecialCharactersArrows,
+	SpecialCharactersCurrency,
+	SpecialCharactersEssentials,
+	SpecialCharactersLatin,
+	SpecialCharactersMathematical,
+	SpecialCharactersText,
+	Strikethrough,
 	Style,
 	Table,
 	TableCaption,
@@ -27,10 +33,13 @@ import {
 	TableProperties,
 	TableToolbar,
 	TextTransformation,
+	Underline,
 	Undo
 } from 'ckeditor5';
 
 import translations from 'ckeditor5/translations/ko.js';
+
+let editor;
 
 const editorConfig = {
 	toolbar: {
@@ -46,14 +55,14 @@ const editorConfig = {
 			'|',
 			'bold',
 			'italic',
+			'underline',
+			'strikethrough',
 			'|',
+			'specialCharacters',
 			'horizontalLine',
 			'link',
 			'insertTable',
 			'blockQuote',
-			'codeBlock',
-			'|',
-			'alignment',
 			'|',
 			'outdent',
 			'indent',
@@ -64,13 +73,11 @@ const editorConfig = {
 	},
 	plugins: [
 		AccessibilityHelp,
-		Alignment,
 		Autoformat,
 		AutoLink,
 		Autosave,
 		BlockQuote,
 		Bold,
-		CodeBlock,
 		Essentials,
 		FindAndReplace,
 		GeneralHtmlSupport,
@@ -82,6 +89,14 @@ const editorConfig = {
 		Link,
 		Paragraph,
 		SelectAll,
+		SpecialCharacters,
+		SpecialCharactersArrows,
+		SpecialCharactersCurrency,
+		SpecialCharactersEssentials,
+		SpecialCharactersLatin,
+		SpecialCharactersMathematical,
+		SpecialCharactersText,
+		Strikethrough,
 		Style,
 		Table,
 		TableCaption,
@@ -90,6 +105,7 @@ const editorConfig = {
 		TableProperties,
 		TableToolbar,
 		TextTransformation,
+		Underline,
 		Undo
 	],
 	heading: {
@@ -161,7 +177,7 @@ const editorConfig = {
 			}
 		}
 	},
-	placeholder: '공지내용을 입력하세요!',
+	placeholder: 'Type or paste your content here!',
 	style: {
 		definitions: [
 			{
@@ -217,4 +233,30 @@ const editorConfig = {
 	translations: [translations]
 };
 
-ClassicEditor.create(document.querySelector('#editor'), editorConfig);
+ClassicEditor.create(document.querySelector('#editor'), editorConfig).then(newEditor => {
+				editor = newEditor;
+			}).catch(error => {
+				console.error(error);
+			});
+
+document.querySelector("#notice_save").addEventListener("click", function() {
+	const editorData = editor.getData();
+	if (notice_frm.ntitle.value == "") {
+		alert("공지사항 제목을 입력해주세요.");
+		notice_frm.ntitle.focus();
+	}
+	else if (editorData == "") {
+		alert("공지 내용을 입력해주세요.");
+		document.querySelector(".ck-editor__editable_inline").focus();
+	}
+	else if (notice_frm.mfile.files.length != 0 && notice_frm.mfile.files[0].size > 2097152) {
+		alert("첨부파일은 2MB 이하만 가능합니다.");
+	}
+	else {
+		if (confirm("이대로 등록하시겠습니까?")) {
+			notice_frm.method = "POST";
+			notice_frm.action = "./notice_writeok.do";
+			notice_frm.submit();
+		}
+	}
+});
