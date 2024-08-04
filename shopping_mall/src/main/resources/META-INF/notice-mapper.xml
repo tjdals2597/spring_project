@@ -18,4 +18,8 @@
 		values ('0', #{ntitle}, #{ntext}, #{nfile}, #{namidx}, #{namname}, #{alert_ck}, '0', now())
 	</insert>
 
+	<update id="add_views">
+		update notice set nviews = nviews + 1 where nidx = #{nidx}
+	</update>
+
 </mapper>

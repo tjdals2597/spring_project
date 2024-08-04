@@ -78,4 +78,10 @@ public class notice_controller {
 			this.pw.close();
 		}
 	}
+	
+	@GetMapping("/notice_view") // 미완성 - 글 페이지 추가 시 업데이트
+	public String notice_view(@RequestParam int nidx) throws Exception {
+		this.ntmd.add_view_count(nidx);
+		return "notice_view";
+	}
 }

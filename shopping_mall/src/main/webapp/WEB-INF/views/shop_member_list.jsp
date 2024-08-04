@@ -20,7 +20,7 @@
 <form id="mlist_pagefrm">
 <main class="maincss">
 <section>
-    <p>회원 리스트</p>
+    <p>회원 리스트 - 아직 안함</p>
     <ol class="new_admin_title">
         <li>NO</li>
         <li>고객명</li>
@@ -54,18 +54,20 @@
 </section>
 <section style="width: 1100px; height: auto; margin: 0 auto; margin-top: 30px;">
     <p style="font-size: 15px;font-weight: bolder; margin-bottom: 10px;">■ 이용 약관</p>
-    <textarea placeholder="이용약관에 대한 내용을 입력하세요" style="width: 100%; height: 100px; resize: none;"></textarea>
-    <input type="button" value="이용약관 수정" title="이용약관 수정" class="btn_button" style="position: relative; left: 100%; margin-left: -100px;">
+    <textarea name="agree_use" placeholder="이용약관에 대한 내용을 입력하세요" style="width: 100%; height: 100px; resize: none;"></textarea>
+    <input type="button" value="이용약관 수정" onclick="useck_update()" title="이용약관 수정" class="btn_button" style="position: relative; left: 100%; margin-left: -100px;">
 </section>
 <section style="width: 1100px; height: auto; margin: 0 auto; margin-top: 30px;">
     <p style="font-size: 15px;font-weight: bolder; margin-bottom: 10px;">■ 개인정보 수집 및 이용</p>
-    <textarea placeholder="개인정보 수집 및 이용" style="width: 100%; height: 100px; resize: none;"></textarea>
-    <input type="button" value="개인정보 약관 수정" title="개인정보 약관 수정" class="btn_button" style="position: relative; left: 100%; margin-left: -100px;">
+    <textarea name="agree_info" placeholder="개인정보 수집 및 이용에 대한 내용을 입력하세요" style="width: 100%; height: 100px; resize: none;"></textarea>
+    <input type="button" value="개인정보 약관 수정" onclick="infock_update()" title="개인정보 약관 수정" class="btn_button" style="position: relative; left: 100%; margin-left: -100px;">
 </section>
 </main>
+<input type="hidden" name="agree_ck">
 </form>
 <footer class="main_copyright">
     <%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
+<script src="./js/member_list.js?v=2"></script>
 </html>

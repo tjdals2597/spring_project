@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class shop_controller {
 	
 	@GetMapping("/admin_main.do")
 	public String admin_main(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
-			HttpServletResponse res, Model m) throws Exception {
+			HttpServletRequest req, HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		if (adata == null) {
 			this.pw = res.getWriter();

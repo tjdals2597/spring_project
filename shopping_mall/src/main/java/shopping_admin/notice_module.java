@@ -26,4 +26,8 @@ public class notice_module {
 	public int submit_notice(notice_dao dao) {
 		return this.sstm.insert("shopnotice.notice_write", dao);
 	}
+	
+	public void add_view_count(int nidx) {
+		this.sstm.update("shopnotice.add_views", nidx);
+	}
 }

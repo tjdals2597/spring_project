@@ -2,8 +2,10 @@ package shopping_admin;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+
+import shopping.agree_txtfile;
 
 @Controller
 public class main_controller extends password_sha3 {
@@ -32,6 +37,23 @@ public class main_controller extends password_sha3 {
 	@GetMapping("/add_master.do")
 	public String add_master() {
 		return "add_master";
+	}
+	
+	@PostMapping("/use_update.do")
+	public void use_update(@RequestParam(defaultValue = "", required = false) String agree_ck, HttpServletRequest req,
+			@RequestParam(defaultValue = "", required = false) String agree_use, HttpServletResponse res,
+			@RequestParam(defaultValue = "", required = false) String agree_info) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		this.pw = res.getWriter();
+		try {
+			new agree_txtfile(req, agree_ck, agree_ck.equals("use") ? agree_use : agree_info);
+			this.pw.print("<script>alert('성공적으로 약관 내용이 변경되었습니다.'); location.href = './admin_main.do';</script>");
+		} catch (Exception e) {
+			this.pw.print("<script>alert('오류가 발생하여 약관 수정에 실패하셨습니다.'); history.go(-1);</script>");
+		} finally {
+			this.pw.close();
+		}
+		;
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
