@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="shopuser">
-
-	<select id="user_search" resultType="userdao">
-		select * from mall_user order by uidx desc
-	</select>
-
-</mapper>
