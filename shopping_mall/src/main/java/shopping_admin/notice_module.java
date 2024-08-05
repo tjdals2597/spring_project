@@ -24,10 +24,33 @@ public class notice_module {
 	}
 	
 	public int submit_notice(notice_dao dao) {
-		return this.sstm.insert("shopnotice.notice_write", dao);
+		return this.sstm.insert("shopnotice.noti_write", dao);
 	}
 	
 	public void add_view_count(int nidx) {
 		this.sstm.update("shopnotice.add_views", nidx);
+	}
+	
+	public List<String> file_select(int del_ck[]) {
+		return this.sstm.selectList("shopnotice.notifile_select", this.arrToString(del_ck));
+	}
+	
+	public int del_notilist(int del_ck[]) {
+		return this.sstm.delete("shopnotice.delete_notice", this.arrToString(del_ck));
+	}
+	
+	public String arrToString(int arr[]) {
+		StringBuilder sb = new StringBuilder();
+		int w = 0;
+		while (w < arr.length) {
+			if (w == 0) {
+				sb.append(arr[w]);				
+			}
+			else {
+				sb.append(","+arr[w]);
+			}
+			w++;
+		}
+		return sb.toString();
 	}
 }

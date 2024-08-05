@@ -7,13 +7,13 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-@Repository("membermodule")
-public class member_module {
+@Repository("usermodule")
+public class user_module {
 
 	@Resource(name = "shoptemplate")
 	private SqlSessionTemplate sstm;
 	
-	public List<String> mlist_select() {
-		return null;
+	public List<user_dao> ulist_select() {
+		return this.sstm.selectList("shopuser.user_search");
 	}
 }

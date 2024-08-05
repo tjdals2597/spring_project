@@ -91,7 +91,7 @@
 </footer>
 </body>
 <script src="./js/list_search.js?v=1"></script>
-<script src="./js/list_checkbox.js?v=2"></script>
+<script src="./js/list_checkbox.js?v=4"></script>
 <script>
 	function go_lpage() {
 		location.href='./product_list.do';

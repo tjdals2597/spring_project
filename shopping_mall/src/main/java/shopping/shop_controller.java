@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @Controller
 public class shop_controller {
 
-	@Resource(name = "membermodule")
-	private member_module mbmd;
+	@Resource(name = "usermodule")
+	private user_module usmd;
 	
 	PrintWriter pw = null;
 	
@@ -30,7 +30,7 @@ public class shop_controller {
 			this.pw.close();
 		}
 		else {
-			m.addAttribute("memberlist", this.mbmd.mlist_select());
+			m.addAttribute("userlist", this.usmd.ulist_select());
 		}
 		return "shop_member_list";
 	}

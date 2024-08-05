@@ -13,7 +13,11 @@
 		from notice order by nidx desc
 	</select>
 
-	<insert id="notice_write">
+	<select id="notifile_select" resultType="String">
+		select nfile from notice where FIND_IN_SET(nidx, #{nidx})
+	</select>
+
+	<insert id="noti_write">
 		insert into notice (nidx, ntitle, ntext, nfile, namidx, namname, alert_ck, nviews, nindate) 
 		values ('0', #{ntitle}, #{ntext}, #{nfile}, #{namidx}, #{namname}, #{alert_ck}, '0', now())
 	</insert>
@@ -21,5 +25,9 @@
 	<update id="add_views">
 		update notice set nviews = nviews + 1 where nidx = #{nidx}
 	</update>
+
+	<delete id="delete_notice">
+		delete from notice where FIND_IN_SET(nidx, #{nidx})
+	</delete>
 
 </mapper>

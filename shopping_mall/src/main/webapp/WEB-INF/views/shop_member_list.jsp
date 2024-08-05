@@ -33,24 +33,30 @@
         <li>상태</li>
         <li>정지여부</li>
     </ol>
-    <ol class="new_admin_none">
-        <li>가입된 회원이 없습니다.</li>
-    </ol>
-    <ol class="new_admin_lists">
-        <li>1</li>
-        <li>한석봉</li>
-        <li>hansbong</li>
-        <li>01012345678</li>
-        <li>hansbong@hanmail.net</li>
-        <li>Y</li>
-        <li>N</li>
-        <li>2024-08-02</li>
-        <li>정상</li>
-        <li>
-            <input type="button" value="정지" class="new_addbtn1" title="정지">
-            <input type="button" value="해제" class="new_addbtn2" title="해제">
-        </li>
-    </ol>
+    <cr:if test="${ userlist.size() == 0 }">
+	    <ol class="new_admin_none">
+	        <li>가입된 회원이 없습니다.</li>
+	    </ol>
+    </cr:if>
+	<cr:if test="${ userlist.size() != 0 }">
+		<cr:forEach var="udata" items="">
+		    <ol class="new_admin_lists">
+		        <li>1</li>
+		        <li>한석봉</li>
+		        <li>hansbong</li>
+		        <li>01012345678</li>
+		        <li>hansbong@hanmail.net</li>
+		        <li>Y</li>
+		        <li>N</li>
+		        <li>2024-08-02</li>
+		        <li>정상</li>
+		        <li>
+		            <input type="button" value="정지" class="new_addbtn1" title="정지">
+		            <input type="button" value="해제" class="new_addbtn2" title="해제">
+		        </li>
+		    </ol>
+		</cr:forEach>
+    </cr:if>
 </section>
 <section style="width: 1100px; height: auto; margin: 0 auto; margin-top: 30px;">
     <p style="font-size: 15px;font-weight: bolder; margin-bottom: 10px;">■ 이용 약관</p>
@@ -69,5 +75,5 @@
     <%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
-<script src="./js/member_list.js?v=2"></script>
+<script src="./js/member_list.js?v=4"></script>
 </html>

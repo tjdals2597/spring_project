@@ -2,7 +2,6 @@ package shopping_admin;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-
-import shopping.agree_txtfile;
 
 @Controller
 public class main_controller extends password_sha3 {
@@ -39,21 +36,34 @@ public class main_controller extends password_sha3 {
 		return "add_master";
 	}
 	
-	@PostMapping("/use_update.do")
-	public void use_update(@RequestParam(defaultValue = "", required = false) String agree_ck, HttpServletRequest req,
+	@PostMapping("/agree_update.do")
+	public void agree_update(@RequestParam(defaultValue = "", required = false) String agree_ck, HttpServletRequest req,
 			@RequestParam(defaultValue = "", required = false) String agree_use, HttpServletResponse res,
 			@RequestParam(defaultValue = "", required = false) String agree_info) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		this.pw = res.getWriter();
 		try {
-			new agree_txtfile(req, agree_ck, agree_ck.equals("use") ? agree_use : agree_info);
+			new agree_txtfile(req).update_txtfile(agree_ck, agree_ck.equals("use") ? agree_use : agree_info);
 			this.pw.print("<script>alert('성공적으로 약관 내용이 변경되었습니다.'); location.href = './admin_main.do';</script>");
 		} catch (Exception e) {
 			this.pw.print("<script>alert('오류가 발생하여 약관 수정에 실패하셨습니다.'); history.go(-1);</script>");
 		} finally {
 			this.pw.close();
 		}
-		;
+	}
+	
+	@GetMapping("/get_agree.do")
+	public void get_agree(@RequestParam(defaultValue = "", required = false) String agree,
+			HttpServletRequest req, HttpServletResponse res) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		this.pw = res.getWriter();
+		try {
+			this.pw.print(new agree_txtfile(req).select_txtfile(agree));
+		} catch (Exception e) {
+			this.pw.print("오류가 발생하여 로드하지 못하였습니다.");
+		} finally {
+			this.pw.close();
+		}
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")

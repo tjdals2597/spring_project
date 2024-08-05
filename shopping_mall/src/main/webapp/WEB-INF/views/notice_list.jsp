@@ -19,6 +19,7 @@
 </head>
 <body>
 <%@ include file="./admin_top.jsp" %>
+<form id="checkbox_frm">
 <main class="maincss">
 <section>
     <p>공지사항 관리페이지</p>
@@ -39,7 +40,7 @@
     <cr:if test="${ noticelist.size() != 0 }">
     	<cr:forEach var="notidata" items="${ noticelist }" varStatus="stat">
 		    <ol>
-		        <li><input type="checkbox" name="del_ck" value="" onclick="checkbox_eachck()"></li>
+		        <li><input type="checkbox" name="del_ck" value="${ notidata.getNidx() }" onclick="checkbox_eachck()"></li>
 		        <li>${ stat.count }</li>
 		        <li>${ notidata.getNtitle() }</li>
 		        <li>${ notidata.getNamname() }</li>
@@ -50,8 +51,8 @@
 	</cr:if>
     </div>
     <div class="board_btn">
-        <button class="border_del" onclick="check_delete()">공지삭제</button>
-        <button class="border_add" onclick="go_page()">공지등록</button>
+        <button type="button" class="border_del" onclick="check_delete('1')">공지삭제</button>
+        <button type="button" class="border_add" onclick="go_wpage()">공지등록</button>
     </div>
     <div class="border_page">
         <ul class="pageing">
@@ -64,14 +65,16 @@
     </div>
 </section>
 </main>
+</form>
 <footer class="main_copyright">
 	<%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
-<script src="./js/list_checkbox.js?v=2"></script>
+<script src="./js/list_checkbox.js?v=4"></script>
 <script>
-	function go_page() {
-		location.href = "./notice_write.do";
+	function go_wpage() {
+		console.log("test");
+		location.href="./notice_write.do";
 	}
 </script>
 </html>

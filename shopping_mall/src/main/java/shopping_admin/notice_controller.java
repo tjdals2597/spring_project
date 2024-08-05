@@ -55,6 +55,12 @@ public class notice_controller {
 		return "notice_write";
 	}
 	
+	@GetMapping("/notice_view.do") // 미완성 - 글 페이지 추가 시 업데이트
+	public String notice_view(@RequestParam int nidx) throws Exception {
+		this.ntmd.add_view_count(nidx);
+		return "notice_view";
+	}
+	
 	@PostMapping("/notice_writeok.do")
 	public void notice_writeok(@RequestParam("mfile") MultipartFile nfile, @ModelAttribute notice_dao dao,
 			HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -79,9 +85,23 @@ public class notice_controller {
 		}
 	}
 	
-	@GetMapping("/notice_view") // 미완성 - 글 페이지 추가 시 업데이트
-	public String notice_view(@RequestParam int nidx) throws Exception {
-		this.ntmd.add_view_count(nidx);
-		return "notice_view";
+	@PostMapping("/notice_delete.do")
+	public void notice_delete(@RequestParam int del_ck[], HttpServletRequest req, HttpServletResponse res) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		try {
+			this.pw = res.getWriter();
+			new files_delete(req, ntmd, del_ck);
+			int callback = this.ntmd.del_notilist(del_ck);
+			if (callback > 0) {
+				this.pw.print("<script>alert('정상적으로 항목이 삭제되었습니다.'); location.href = './notice_list.do';</script>");
+			}
+			else {
+				this.pw.print("<script>alert('데이터 오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
+			}
+		} catch (Exception e) {
+			this.pw.print("<script>alert('오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
+		} finally {
+			this.pw.close();
+		}
 	}
 }
