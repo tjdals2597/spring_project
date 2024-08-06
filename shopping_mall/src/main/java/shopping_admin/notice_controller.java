@@ -22,10 +22,14 @@ public class notice_controller {
 	@Resource(name = "noticemodule")
 	private notice_module ntmd;
 	
+	final Integer DATACOUNTPERPAGE = 1;
+	final Integer LIMITPAGEINGCOUNT = 10;
 	PrintWriter pw = null;
 	
 	@GetMapping("/notice_list.do")
 	public String notice_list(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
+			@RequestParam(value = "", required = false) Integer page,
+			@RequestParam(value = "", required = false) String doublep,
 			HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		if (adata == null) {
@@ -34,7 +38,36 @@ public class notice_controller {
 			this.pw.close();
 		}
 		else {
-			m.addAttribute("noticelist", this.ntmd.notice_listall());
+			page = (page == null) ? 1 : page;
+			System.out.println("확인 중 : ");
+			System.out.println(doublep);
+			
+			Integer pg_start = ((page - 1) / LIMITPAGEINGCOUNT) * 10 + 1;
+			Integer pg_end = (((page - 1) / LIMITPAGEINGCOUNT) + 1) * 10;
+			
+			if (doublep == null || doublep == "") {
+				System.out.println("test");
+			}
+			else {
+				if (doublep.equals("prev")) {
+					System.out.println("<< 클릭");
+				}
+				else if (doublep.equals("next")) {
+					System.out.println(">> 클릭");
+				}
+				else {
+					System.out.println("여긴 뭐지?");
+				}
+			}
+			
+			Integer startNumber = (page - 1) * DATACOUNTPERPAGE;
+			m.addAttribute("page", page);
+			m.addAttribute("startNumber", startNumber);
+			m.addAttribute("maxcount", DATACOUNTPERPAGE);
+			m.addAttribute("pg_start", pg_start);
+			m.addAttribute("pg_end", pg_end);
+			m.addAttribute("dataCount", this.ntmd.notice_count());
+			m.addAttribute("noticelist", this.ntmd.notice_listall(startNumber, DATACOUNTPERPAGE));
 		}
 		return "notice_list";
 	}

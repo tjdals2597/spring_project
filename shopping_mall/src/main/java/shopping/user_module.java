@@ -13,7 +13,7 @@ public class user_module {
 	@Resource(name = "shoptemplate")
 	private SqlSessionTemplate sstm;
 	
-	public List<user_dao> ulist_select() {
+	public List<malluser_dao> ulist_select() {
 		return this.sstm.selectList("shopuser.user_search");
 	}
 }

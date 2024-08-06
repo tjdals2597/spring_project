@@ -17,9 +17,14 @@ public class notice_module {
 	@Resource(name = "shoptemplate")
 	private SqlSessionTemplate sstm;
 	
-	public List<notice_dao> notice_listall() {
+	public int notice_count() {
+		return this.sstm.selectOne("shopnotice.alldata_count");
+	}
+	
+	public List<notice_dao> notice_listall(Integer pno, Integer dno) {
 		this.keycode = new HashMap<String, String>();
-		this.keycode.put("part", "1");
+		this.keycode.put("pageno", String.valueOf(pno));
+		this.keycode.put("datano", String.valueOf(dno));
 		return this.sstm.selectList("shopnotice.all_notice_select", this.keycode);
 	}
 	

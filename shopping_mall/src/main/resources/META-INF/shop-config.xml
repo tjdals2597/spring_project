@@ -9,6 +9,6 @@
 		<typeAlias alias="categorydao" type="shopping_admin.category_dao"/>
 		<typeAlias alias="productdao" type="shopping_admin.product_dao"/>
 		<typeAlias alias="noticedao" type="shopping_admin.notice_dao"/>
-		<typeAlias alias="userdao" type="shopping.user_dao"/>
+		<typeAlias alias="muserdao" type="shopping.malluser_dao"/>
 	</typeAliases>
 </configuration>

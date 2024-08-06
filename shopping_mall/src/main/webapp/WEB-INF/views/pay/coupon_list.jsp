@@ -10,7 +10,7 @@
 </head>
 <body>
 	<p>쿠폰리스트</p>
-	${ stringList[1] }
+	<p>총 ${ total }개</p>
 	<table border="1">
 		<thead>
 			<tr>
@@ -22,14 +22,26 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
+			<cr:set var="ino" value="${ total - startpg }"/>
+			<cr:forEach var="data" items="${ all }" varStatus="idx">
+				<tr>
+					<td>${ ino - idx.index }</td>
+					<td>${ data.get(1) }</td>
+					<td>${ data.get(2) }</td>
+					<td>${ data.get(3) }</td>
+					<td>${ data.get(4) }</td>
+				</tr>
+			</cr:forEach>
 		</tbody>
+	</table>
+	<!-- 페이지 번호 출력 -->
+	<table border="1">
+		<tr>
+			<cr:set var="pg" value="${ total / 2 + (1 - (total / 2) % 1) % 1 }"/>
+			<cr:forEach var="no" begin="1" end="${ pg }" step="1">
+				<td style="width: 15px;"><a href="./coupon_list.do?page=${ no }">${ no }</a></td>
+			</cr:forEach>
+		</tr>
 	</table>
 </body>
 </html>

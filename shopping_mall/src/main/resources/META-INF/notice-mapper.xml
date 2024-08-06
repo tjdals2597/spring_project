@@ -2,15 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shopnotice">
 
+	<select id="alldata_count" resultType="int">
+		select count(*) from notice
+	</select>
+
 	<select id="all_notice_select" resultType="noticedao">
-		select 
-		<choose>
-			<when test='part=="1"'>
-				nidx, ntitle, namidx, namname, alert_ck, nviews, nindate
-			</when>
-			<otherwise>*</otherwise>
-		</choose>
-		from notice order by nidx desc
+		select * from notice order by nidx desc limit ${pageno}, ${datano}
 	</select>
 
 	<select id="notifile_select" resultType="String">

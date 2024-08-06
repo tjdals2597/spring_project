@@ -39,10 +39,10 @@
 	    </ol>
     </cr:if>
 	<cr:if test="${ userlist.size() != 0 }">
-		<cr:forEach var="udata" items="">
+		<cr:forEach var="udata" items="${ userlist }" varStatus="stat">
 		    <ol class="new_admin_lists">
-		        <li>1</li>
-		        <li>한석봉</li>
+		        <li>${ stat.count }</li>
+		        <li>${ udata.getUname() }</li>
 		        <li>hansbong</li>
 		        <li>01012345678</li>
 		        <li>hansbong@hanmail.net</li>
@@ -75,5 +75,5 @@
     <%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
-<script src="./js/member_list.js?v=4"></script>
+<script src="./js/member_list.js?v=5"></script>
 </html>

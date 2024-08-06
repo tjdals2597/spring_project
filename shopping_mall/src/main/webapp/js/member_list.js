@@ -1,3 +1,16 @@
+function ajax_first() {
+	var html1 = new XMLHttpRequest();
+	html1.onreadystatechange = function() {
+		if (html1.readyState == 4 && html1.status == 200) {
+			mlist_pagefrm.agree_use.value = this.response;
+		}
+	}
+	html1.open("GET", "./get_agree.do?agree=use", true);
+	html1.send();
+}
+
+ajax_first();
+
 function ajax_second() {
 	var html2 = new XMLHttpRequest();
 	html2.onreadystatechange = function() {
@@ -8,17 +21,6 @@ function ajax_second() {
 	html2.open("GET", "./get_agree.do?agree=info", true);
 	html2.send();
 }
-
-var html1 = new XMLHttpRequest();
-html1.onreadystatechange = function() {
-	if (html1.readyState == 4 && html1.status == 200) {
-		mlist_pagefrm.agree_use.value = this.response;
-	}
-}
-html1.open("GET", "./get_agree.do?agree=use", true);
-html1.send();
-
-setTimeout(ajax_second, 10);
 
 function useck_update() {
 	if (mlist_pagefrm.agree_use.value == "") {
@@ -49,3 +51,5 @@ function infock_update() {
 		}
 	}
 }
+
+setTimeout(ajax_second, 10);

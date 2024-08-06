@@ -38,10 +38,11 @@
 	    </ol>
     </cr:if>
     <cr:if test="${ noticelist.size() != 0 }">
+    	<cr:set var="pageidx" value="${ dataCount - startNumber }"/>
     	<cr:forEach var="notidata" items="${ noticelist }" varStatus="stat">
 		    <ol>
 		        <li><input type="checkbox" name="del_ck" value="${ notidata.getNidx() }" onclick="checkbox_eachck()"></li>
-		        <li>${ stat.count }</li>
+		        <li>${ pageidx - stat.index }</li>
 		        <li>${ notidata.getNtitle() }</li>
 		        <li>${ notidata.getNamname() }</li>
 		        <li>${ fn:substring(notidata.getNindate(), 0, 10) }</li>
@@ -56,11 +57,25 @@
     </div>
     <div class="border_page">
         <ul class="pageing">
-            <li><img src="./ico/double_left.svg"></li>
-            <li><img src="./ico/left.svg"></li>
-            <li>1</li>
-            <li><img src="./ico/right.svg"></li>
-            <li><img src="./ico/double_right.svg"></li>
+            <!-- page : 현재 페이지 번호 / pg : 마지막 페이지 번호 -->
+            <!-- maxcount : 페이지당 최대 데이터 개수 / dataCount : 데이터 개수 -->
+            <!-- pg_limit : 10개까지 페이지 번호 출력 -->
+            <cr:set var="pg_limit" value="${ pg_limit }"/>
+            <cr:set var="pg" value="${ dataCount / maxcount + (1 - (dataCount / maxcount) % 1) % 1 }"/>
+            
+            <li onclick="double_prev('${ page }')"><img src="./ico/double_left.svg"></li>
+            <cr:if test="${ page != 1 }">
+            	<li onclick="page_prev('${ page }')"><img src="./ico/left.svg"></li>
+            </cr:if>
+            <cr:forEach var="cnt" begin="${ pg_start }" end="${ pg_end }" step="1">
+            	<cr:if test="${ cnt <= pg }">
+		            <li onclick="js_selectpage('${ cnt }')">${ cnt }</li>
+            	</cr:if>
+            </cr:forEach>
+            <cr:if test="${ page != pg }">
+            	<li onclick="page_next('${ page }')"><img src="./ico/right.svg"></li>
+            </cr:if>
+            <li onclick="double_next('${ page }')"><img src="./ico/double_right.svg"></li>
         </ul>
     </div>
 </section>
@@ -71,10 +86,5 @@
 </footer>
 </body>
 <script src="./js/list_checkbox.js?v=4"></script>
-<script>
-	function go_wpage() {
-		console.log("test");
-		location.href="./notice_write.do";
-	}
-</script>
+<script src="./js/noti_pageing.js?v=3"></script>
 </html>
