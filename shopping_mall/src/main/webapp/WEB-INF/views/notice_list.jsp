@@ -63,19 +63,19 @@
             <cr:set var="pg_limit" value="${ pg_limit }"/>
             <cr:set var="pg" value="${ dataCount / maxcount + (1 - (dataCount / maxcount) % 1) % 1 }"/>
             
-            <li onclick="double_prev('${ page }')"><img src="./ico/double_left.svg"></li>
             <cr:if test="${ page != 1 }">
-            	<li onclick="page_prev('${ page }')"><img src="./ico/left.svg"></li>
+            	<li onclick="double_prev()"><img src="./ico/double_left.svg"></li>
             </cr:if>
+            <li onclick="page_prev('${ pg_start - 1 }')"><img src="./ico/left.svg"></li>
             <cr:forEach var="cnt" begin="${ pg_start }" end="${ pg_end }" step="1">
             	<cr:if test="${ cnt <= pg }">
 		            <li onclick="js_selectpage('${ cnt }')">${ cnt }</li>
             	</cr:if>
             </cr:forEach>
+            <li onclick="page_next('${ pg_end + 1 }')"><img src="./ico/right.svg"></li>
             <cr:if test="${ page != pg }">
-            	<li onclick="page_next('${ page }')"><img src="./ico/right.svg"></li>
+            	<li onclick="double_next('${ pg }')"><img src="./ico/double_right.svg"></li>
             </cr:if>
-            <li onclick="double_next('${ page }')"><img src="./ico/double_right.svg"></li>
         </ul>
     </div>
 </section>
@@ -86,5 +86,5 @@
 </footer>
 </body>
 <script src="./js/list_checkbox.js?v=4"></script>
-<script src="./js/noti_pageing.js?v=3"></script>
+<script src="./js/noti_pageing.js?v=4"></script>
 </html>

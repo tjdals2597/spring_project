@@ -29,7 +29,6 @@ public class notice_controller {
 	@GetMapping("/notice_list.do")
 	public String notice_list(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
 			@RequestParam(value = "", required = false) Integer page,
-			@RequestParam(value = "", required = false) String doublep,
 			HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		if (adata == null) {
@@ -39,27 +38,8 @@ public class notice_controller {
 		}
 		else {
 			page = (page == null) ? 1 : page;
-			System.out.println("확인 중 : ");
-			System.out.println(doublep);
-			
-			Integer pg_start = ((page - 1) / LIMITPAGEINGCOUNT) * 10 + 1;
-			Integer pg_end = (((page - 1) / LIMITPAGEINGCOUNT) + 1) * 10;
-			
-			if (doublep == null || doublep == "") {
-				System.out.println("test");
-			}
-			else {
-				if (doublep.equals("prev")) {
-					System.out.println("<< 클릭");
-				}
-				else if (doublep.equals("next")) {
-					System.out.println(">> 클릭");
-				}
-				else {
-					System.out.println("여긴 뭐지?");
-				}
-			}
-			
+			Integer pg_start = ((page - 1) / LIMITPAGEINGCOUNT) * LIMITPAGEINGCOUNT + 1;
+			Integer pg_end = (((page - 1) / LIMITPAGEINGCOUNT) + 1) * LIMITPAGEINGCOUNT;
 			Integer startNumber = (page - 1) * DATACOUNTPERPAGE;
 			m.addAttribute("page", page);
 			m.addAttribute("startNumber", startNumber);

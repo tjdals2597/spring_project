@@ -7,17 +7,17 @@ function js_selectpage(no) {
 }
 
 function page_prev(no) {
-	location.href = "./notice_list.do?page=" + (Number(no) - 1);
+	location.href = "./notice_list.do?page=" + no;
 }
 
 function page_next(no) {
-	location.href = "./notice_list.do?page=" + (Number(no) + 1);
+	location.href = "./notice_list.do?page=" + no;
 }
 
-function double_prev(no) {
-	location.href = "./notice_list.do?page=" + no + "&doublep=prev";
+function double_prev() {
+	location.href = "./notice_list.do?page=1";
 }
 
 function double_next(no) {
-	location.href = "./notice_list.do?page=" + no + "&doublep=next";
+	location.href = "./notice_list.do?page=" + Number(no);
 }
