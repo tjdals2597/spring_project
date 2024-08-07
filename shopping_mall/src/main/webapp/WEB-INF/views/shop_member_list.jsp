@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,9 +19,11 @@
 <body>
 <%@ include file="./admin_top.jsp" %>
 <form id="mlist_pagefrm">
+<input type="hidden" name="loginck" id="loginck">
+<input type="hidden" name="valueck" id="valueck">
 <main class="maincss">
 <section>
-    <p>회원 리스트 - 아직 안함</p>
+    <p>회원 리스트</p>
     <ol class="new_admin_title">
         <li>NO</li>
         <li>고객명</li>
@@ -43,16 +46,20 @@
 		    <ol class="new_admin_lists">
 		        <li>${ stat.count }</li>
 		        <li>${ udata.getUname() }</li>
-		        <li>hansbong</li>
-		        <li>01012345678</li>
-		        <li>hansbong@hanmail.net</li>
-		        <li>Y</li>
-		        <li>N</li>
-		        <li>2024-08-02</li>
-		        <li>정상</li>
+		        <li>${ udata.getUid() }</li>
+		        <li>${ udata.getUphone() }</li>
+		        <li>${ udata.getUemail() }</li>
+		        <li>${ udata.getCkuse_email() }</li>
+		        <li>${ udata.getCkuse_phone() }</li>
+		        <li>${ fn:substring(udata.getUindate(), 0, 10) }</li>
+		        <li>${ udata.getLogin_status() }</li>
 		        <li>
-		            <input type="button" value="정지" class="new_addbtn1" title="정지">
-		            <input type="button" value="해제" class="new_addbtn2" title="해제">
+		        	<cr:if test="${ udata.getLogin_status().equals('정상') }">
+		            	<input type="button" value="정지" onclick="userlogin_no('${ udata.getUidx() }')" class="new_addbtn1" title="정지">
+		        	</cr:if>
+		        	<cr:if test="${ udata.getLogin_status().equals('휴면') }">
+		            	<input type="button" value="해제" onclick="userlogin_ok('${ udata.getUidx() }')" class="new_addbtn2" title="해제">
+		            </cr:if>
 		        </li>
 		    </ol>
 		</cr:forEach>
@@ -75,5 +82,5 @@
     <%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
-<script src="./js/member_list.js?v=6"></script>
+<script src="./js/member_list.js?v=4"></script>
 </html>

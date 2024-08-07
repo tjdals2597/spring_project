@@ -1,25 +1,14 @@
-function ajax_first() {
-	var html1 = new XMLHttpRequest();
-	html1.onreadystatechange = function() {
-		if (html1.readyState == 4 && html1.status == 200) {
-			mlist_pagefrm.agree_use.value = this.response;
+function agree_ajax() {
+	var html = new XMLHttpRequest();
+	html.onreadystatechange = function() {
+		if (html.readyState == 4 && html.status == 200) {
+			var result = JSON.parse(this.response);
+			mlist_pagefrm.agree_use.value = result["useAgree"];
+			mlist_pagefrm.agree_info.value = result["infoAgree"];
 		}
 	}
-	html1.open("GET", "./get_agree.do?agree=use", true);
-	html1.send();
-}
-
-ajax_first();
-
-function ajax_second() {
-	var html2 = new XMLHttpRequest();
-	html2.onreadystatechange = function() {
-		if (html2.readyState == 4 && html2.status == 200) {
-			mlist_pagefrm.agree_info.value = this.response;
-		}
-	}
-	html2.open("GET", "./get_agree.do?agree=info", true);
-	html2.send();
+	html.open("GET", "./get_agree.do", true);
+	html.send();
 }
 
 function useck_update() {
@@ -52,4 +41,27 @@ function infock_update() {
 	}
 }
 
-setTimeout(ajax_second, 100);
+var loginck = document.getElementById("loginck");
+var valueck = document.getElementById("valueck");
+
+function userlogin_no(no) {
+	if (confirm("정말로 해당 회원의 계정을 휴면 상태로 변경하시겠습니까?")) {
+		login_updateck(no, "휴면");
+	}
+}
+
+function userlogin_ok(no) {
+	if (confirm("정말로 해당 계정의 휴면 상태를 해제하시겠습니까?")) {
+		login_updateck(no, "정상");
+	}
+}
+
+function login_updateck(no, ck) {
+	loginck.value = no;
+	valueck.value = ck;
+	mlist_pagefrm.method = "POST";
+	mlist_pagefrm.action = "./userlogin_update.do";
+	mlist_pagefrm.submit();
+}
+
+agree_ajax();

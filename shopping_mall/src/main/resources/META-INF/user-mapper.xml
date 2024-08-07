@@ -6,4 +6,8 @@
 		select * from mall_user order by uidx desc
 	</select>
 
+	<update id="userlogin_ck_update" parameterType="Map">
+		update mall_user set login_status = #{ck} where uidx = #{uidx}
+	</update>
+
 </mapper>

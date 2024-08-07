@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -53,12 +54,15 @@ public class main_controller extends password_sha3 {
 	}
 	
 	@GetMapping("/get_agree.do")
-	public void get_agree(@RequestParam(defaultValue = "", required = false) String agree,
-			HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void get_agree(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		this.pw = res.getWriter();
 		try {
-			this.pw.print(new agree_txtfile(req).select_txtfile(agree));
+			JSONObject jo = new JSONObject();
+			agree_txtfile at = new agree_txtfile(req);
+			jo.put("useAgree", at.select_txtfile("use"));
+			jo.put("infoAgree", at.select_txtfile("info"));
+			this.pw.print(jo);
 		} catch (Exception e) {
 			this.pw.print("오류가 발생하여 로드하지 못하였습니다.");
 		} finally {
