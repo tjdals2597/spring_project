@@ -24,13 +24,15 @@ public class product_controller {
 	@Resource(name = "productmodule")
 	private product_module pdmd;
 	
+	final Integer DATA_COUNT_PER_PAGE = 15;
+	final Integer LIMIT_PAGEING_COUNT = 10;
 	PrintWriter pw = null;
 	
 	@GetMapping("/product_list.do")
 	public String product_list(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
-			@RequestParam(defaultValue = "", required = false) String search_part,
-			@RequestParam(defaultValue = "", required = false) String search_word,
-			@RequestParam(defaultValue = "", required = false) String pageno, HttpServletResponse res, Model m) throws Exception {
+			@RequestParam(value = "", required = false) String search_part,
+			@RequestParam(value = "", required = false) String search_word,
+			@RequestParam(value = "", required = false) Integer page, HttpServletResponse res, Model m) throws Exception {
 		res.setContentType("text/html; charset=UTF-8");
 		if (adata == null) {
 			this.pw = res.getWriter();
@@ -38,19 +40,68 @@ public class product_controller {
 			this.pw.close();
 		}
 		else {
-			Integer no = (pageno.equals("")) ? 1 : Integer.valueOf(pageno);
-			if (search_part.equals("") || search_word.equals("")) {
-				m.addAttribute("productlist", this.pdmd.product_search(no));
-				m.addAttribute("productcount", this.pdmd.product_count());
+			page = (page == null) ? 1 : page;
+			Integer pg_start = ((page - 1) / LIMIT_PAGEING_COUNT) * LIMIT_PAGEING_COUNT + 1;
+			Integer pg_end = (((page - 1) / LIMIT_PAGEING_COUNT) + 1) * LIMIT_PAGEING_COUNT;
+			Integer startNumber = (page - 1) * DATA_COUNT_PER_PAGE;
+			m.addAttribute("page", page);
+			m.addAttribute("startNumber", startNumber);
+			m.addAttribute("maxcount", DATA_COUNT_PER_PAGE);
+			m.addAttribute("pg_limit", LIMIT_PAGEING_COUNT);
+			m.addAttribute("pg_start", pg_start);
+			m.addAttribute("pg_end", pg_end);
+			m.addAttribute("dataCount", this.pdmd.product_count());
+			if (search_part == null || search_word == null || search_part.equals("") || search_word.equals("")) {
+				m.addAttribute("search_ck", "no");
+				m.addAttribute("productlist", this.pdmd.product_search(startNumber, DATA_COUNT_PER_PAGE));
 			}
 			else {
+				m.addAttribute("search_ck", "ok");
 				m.addAttribute("search_part", search_part);
 				m.addAttribute("search_word", search_word);
-				m.addAttribute("productlist", this.pdmd.product_search(no, search_part, search_word));
-				m.addAttribute("productcount", this.pdmd.product_count());
+				m.addAttribute("searchCount", this.pdmd.searchprod_count(search_part, search_word));
+				m.addAttribute("productlist", this.pdmd.product_search(startNumber, DATA_COUNT_PER_PAGE, search_part, search_word));
 			}
 		}
 		return "product_list";
+	}
+	
+	@GetMapping("/cate_list.do")
+	public String cate_list(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
+			@RequestParam(value = "", required = false) String search_part,
+			@RequestParam(value = "", required = false) String search_word,
+			@RequestParam(value = "", required = false) Integer page, HttpServletResponse res, Model m) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		if (adata == null) {
+			this.pw = res.getWriter();
+			this.pw.print("<script>alert('올바른 접근 방식이 아닙니다.'); location.href = './admin';</script>");
+			this.pw.close();
+		}
+		else {
+			page = (page == null) ? 1 : page;
+			Integer pg_start = ((page - 1) / LIMIT_PAGEING_COUNT) * LIMIT_PAGEING_COUNT + 1;
+			Integer pg_end = (((page - 1) / LIMIT_PAGEING_COUNT) + 1) * LIMIT_PAGEING_COUNT;
+			Integer startNumber = (page - 1) * DATA_COUNT_PER_PAGE;
+			m.addAttribute("page", page);
+			m.addAttribute("startNumber", startNumber);
+			m.addAttribute("maxcount", DATA_COUNT_PER_PAGE);
+			m.addAttribute("pg_limit", LIMIT_PAGEING_COUNT);
+			m.addAttribute("pg_start", pg_start);
+			m.addAttribute("pg_end", pg_end);
+			m.addAttribute("dataCount", this.pdmd.category_count());
+			if (search_part == null || search_word == null || search_part.equals("") || search_word.equals("")) {
+				m.addAttribute("search_ck", "no");
+				m.addAttribute("categorylist", this.pdmd.category_search(startNumber, DATA_COUNT_PER_PAGE));
+			}
+			else {
+				m.addAttribute("search_ck", "ok");
+				m.addAttribute("search_part", search_part);
+				m.addAttribute("search_word", search_word);
+				m.addAttribute("searchCount", this.pdmd.searchcate_count(search_part, search_word));
+				m.addAttribute("categorylist", this.pdmd.category_search(startNumber, DATA_COUNT_PER_PAGE, search_part, search_word));
+			}
+		}
+		return "cate_list";
 	}
 	
 	@GetMapping("/product_write.do")
@@ -66,34 +117,6 @@ public class product_controller {
 			m.addAttribute("catelist", this.pdmd.catelist_search());
 		}
 		return "product_write";
-	}
-	
-	@GetMapping("/cate_list.do")
-	public String cate_list(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
-			@RequestParam(defaultValue = "", required = false) String search_part,
-			@RequestParam(defaultValue = "", required = false) String search_word,
-			@RequestParam(defaultValue = "", required = false) String pageno, HttpServletResponse res, Model m) throws Exception {
-		res.setContentType("text/html; charset=UTF-8");
-		if (adata == null) {
-			this.pw = res.getWriter();
-			this.pw.print("<script>alert('올바른 접근 방식이 아닙니다.'); location.href = './admin';</script>");
-			this.pw.close();
-		}
-		else {
-			Integer no = (pageno.equals("")) ? 1 : Integer.valueOf(pageno);
-			if (search_part.equals("") || search_word.equals("")) {
-				m.addAttribute("categorylist", this.pdmd.category_search(no));
-				m.addAttribute("catecount", this.pdmd.category_count());
-			}
-			else {
-				m.addAttribute("search_part", search_part);
-				m.addAttribute("search_word", search_word);
-				m.addAttribute("categorylist", this.pdmd.category_search(no, search_part, search_word));
-				m.addAttribute("catecount", this.pdmd.category_count());
-			}
-			
-		}
-		return "cate_list";
 	}
 	
 	@GetMapping("/cate_write.do")

@@ -2,6 +2,7 @@ package shopping_admin;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +23,8 @@ public class notice_controller {
 	@Resource(name = "noticemodule")
 	private notice_module ntmd;
 	
-	final Integer DATACOUNTPERPAGE = 1;
-	final Integer LIMITPAGEINGCOUNT = 10;
+	final Integer DATA_COUNT_PER_PAGE = 10;
+	final Integer LIMIT_PAGEING_COUNT = 10;
 	PrintWriter pw = null;
 	
 	@GetMapping("/notice_list.do")
@@ -38,16 +39,17 @@ public class notice_controller {
 		}
 		else {
 			page = (page == null) ? 1 : page;
-			Integer pg_start = ((page - 1) / LIMITPAGEINGCOUNT) * LIMITPAGEINGCOUNT + 1;
-			Integer pg_end = (((page - 1) / LIMITPAGEINGCOUNT) + 1) * LIMITPAGEINGCOUNT;
-			Integer startNumber = (page - 1) * DATACOUNTPERPAGE;
+			Integer pg_start = ((page - 1) / LIMIT_PAGEING_COUNT) * LIMIT_PAGEING_COUNT + 1;
+			Integer pg_end = (((page - 1) / LIMIT_PAGEING_COUNT) + 1) * LIMIT_PAGEING_COUNT;
+			Integer startNumber = (page - 1) * DATA_COUNT_PER_PAGE;
 			m.addAttribute("page", page);
 			m.addAttribute("startNumber", startNumber);
-			m.addAttribute("maxcount", DATACOUNTPERPAGE);
+			m.addAttribute("maxcount", DATA_COUNT_PER_PAGE);
+			m.addAttribute("pg_limit", LIMIT_PAGEING_COUNT);
 			m.addAttribute("pg_start", pg_start);
 			m.addAttribute("pg_end", pg_end);
 			m.addAttribute("dataCount", this.ntmd.notice_count());
-			m.addAttribute("noticelist", this.ntmd.notice_listall(startNumber, DATACOUNTPERPAGE));
+			m.addAttribute("noticelist", this.ntmd.notice_listall(startNumber, DATA_COUNT_PER_PAGE));
 		}
 		return "notice_list";
 	}
@@ -112,6 +114,7 @@ public class notice_controller {
 				this.pw.print("<script>alert('데이터 오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
 			}
 		} catch (Exception e) {
+			System.out.println(e);
 			this.pw.print("<script>alert('오류가 발생하여 정상적으로 처리되지 않았습니다.'); history.go(-1);</script>");
 		} finally {
 			this.pw.close();

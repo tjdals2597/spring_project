@@ -17,22 +17,40 @@ public class product_module {
 	@Resource(name = "shoptemplate")
 	private SqlSessionTemplate sstm;
 	
-	public List<String> catemenu_search() {
-		return this.sstm.selectList("cateproduct.select_category");
-	}
-	
-	public List<category_dao> category_search(Integer no) {
+	public List<category_dao> category_search(Integer pno, Integer dno) {
 		this.keycode = new HashMap<String, String>();
-		this.keycode.put("no", String.valueOf((no - 1) * 10));
+		this.keycode.put("pageno", String.valueOf(pno));
+		this.keycode.put("datano", String.valueOf(dno));
 		return this.sstm.selectList("cateproduct.select_cateall", this.keycode);
 	}
 	
-	public List<category_dao> category_search(Integer no, String search_part, String search_word) {
+	public List<category_dao> category_search(Integer pno, Integer dno, String search_part, String search_word) {
 		this.keycode = new HashMap<String, String>();
-		this.keycode.put("no", String.valueOf((no - 1) * 10));
+		this.keycode.put("pageno", String.valueOf(pno));
+		this.keycode.put("datano", String.valueOf(dno));
 		this.keycode.put("search_part", search_part);
 		this.keycode.put("search_word", search_word);
 		return this.sstm.selectList("cateproduct.select_catesearch", this.keycode);
+	}
+	
+	public List<product_dao> product_search(Integer pno, Integer dno) {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("pageno", String.valueOf(pno));
+		this.keycode.put("datano", String.valueOf(dno));
+		return this.sstm.selectList("cateproduct.select_prodall", this.keycode);
+	}
+	
+	public List<product_dao> product_search(Integer pno, Integer dno, String search_part, String search_word) {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("pageno", String.valueOf(pno));
+		this.keycode.put("datano", String.valueOf(dno));
+		this.keycode.put("search_part", search_part);
+		this.keycode.put("search_word", search_word);
+		return this.sstm.selectList("cateproduct.select_prodsearch", this.keycode);
+	}
+	
+	public List<String> catemenu_search() {
+		return this.sstm.selectList("cateproduct.select_category");
 	}
 	
 	public int category_count() {
@@ -41,23 +59,27 @@ public class product_module {
 		return this.sstm.selectOne("cateproduct.select_count", this.keycode);
 	}
 	
-	public List<product_dao> product_search(Integer no) {
+	public int searchcate_count(String search_part, String search_word) {
 		this.keycode = new HashMap<String, String>();
-		this.keycode.put("no", String.valueOf((no - 1) * 10));
-		return this.sstm.selectList("cateproduct.select_prodall", this.keycode);
-	}
-	
-	public List<product_dao> product_search(Integer no, String search_part, String search_word) {
-		this.keycode = new HashMap<String, String>();
-		this.keycode.put("no", String.valueOf((no - 1) * 10));
+		this.keycode.put("table", "category");
+		this.keycode.put("part", "2");
 		this.keycode.put("search_part", search_part);
 		this.keycode.put("search_word", search_word);
-		return this.sstm.selectList("cateproduct.select_prodsearch", this.keycode);
+		return this.sstm.selectOne("cateproduct.select_count", this.keycode);
 	}
 	
 	public int product_count() {
 		this.keycode = new HashMap<String, String>();
 		this.keycode.put("table", "product");
+		return this.sstm.selectOne("cateproduct.select_count", this.keycode);
+	}
+	
+	public int searchprod_count(String search_part, String search_word) {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("table", "product");
+		this.keycode.put("part", "2");
+		this.keycode.put("search_part", search_part);
+		this.keycode.put("search_word", search_word);
 		return this.sstm.selectOne("cateproduct.select_count", this.keycode);
 	}
 	

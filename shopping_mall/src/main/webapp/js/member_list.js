@@ -52,4 +52,4 @@ function infock_update() {
 	}
 }
 
-setTimeout(ajax_second, 10);
+setTimeout(ajax_second, 100);

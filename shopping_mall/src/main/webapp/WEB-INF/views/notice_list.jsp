@@ -57,24 +57,24 @@
     </div>
     <div class="border_page">
         <ul class="pageing">
-            <!-- page : 현재 페이지 번호 / pg : 마지막 페이지 번호 -->
-            <!-- maxcount : 페이지당 최대 데이터 개수 / dataCount : 데이터 개수 -->
-            <!-- pg_limit : 10개까지 페이지 번호 출력 -->
             <cr:set var="pg_limit" value="${ pg_limit }"/>
             <cr:set var="pg" value="${ dataCount / maxcount + (1 - (dataCount / maxcount) % 1) % 1 }"/>
-            
             <cr:if test="${ page != 1 }">
-            	<li onclick="double_prev()"><img src="./ico/double_left.svg"></li>
+            	<li onclick="js_selectpage('1')"><img src="./ico/double_left.svg"></li>
             </cr:if>
-            <li onclick="page_prev('${ pg_start - 1 }')"><img src="./ico/left.svg"></li>
+            <cr:if test="${ pg_start > maxcount }">
+            	<li onclick="js_selectpage('${ pg_start - 1 }')"><img src="./ico/left.svg"></li>
+            </cr:if>
             <cr:forEach var="cnt" begin="${ pg_start }" end="${ pg_end }" step="1">
             	<cr:if test="${ cnt <= pg }">
 		            <li onclick="js_selectpage('${ cnt }')">${ cnt }</li>
             	</cr:if>
             </cr:forEach>
-            <li onclick="page_next('${ pg_end + 1 }')"><img src="./ico/right.svg"></li>
+            <cr:if test="${ pg_end < pg }">
+            	<li onclick="js_selectpage('${ pg_end + 1 }')"><img src="./ico/right.svg"></li>
+            </cr:if>
             <cr:if test="${ page != pg }">
-            	<li onclick="double_next('${ pg }')"><img src="./ico/double_right.svg"></li>
+            	<li onclick="js_selectpage('${ pg }')"><img src="./ico/double_right.svg"></li>
             </cr:if>
         </ul>
     </div>
@@ -86,5 +86,13 @@
 </footer>
 </body>
 <script src="./js/list_checkbox.js?v=4"></script>
-<script src="./js/noti_pageing.js?v=4"></script>
+<script>
+	function go_wpage() {
+		location.href = "./notice_write.do";
+	}
+	
+	function js_selectpage(no) {
+		location.href = "./notice_list.do?page=" + Number(no);
+	}
+</script>
 </html>

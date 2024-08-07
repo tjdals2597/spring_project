@@ -75,5 +75,5 @@
     <%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
-<script src="./js/member_list.js?v=5"></script>
+<script src="./js/member_list.js?v=6"></script>
 </html>

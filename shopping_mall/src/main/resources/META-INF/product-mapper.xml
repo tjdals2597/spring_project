@@ -7,6 +7,9 @@
 		<if test='part=="1"'>
 			 where pcode = #{pcode}
 		</if>
+		<if test='part=="2"'>
+			where ${search_part} like concat('%', #{search_word}, '%')
+		</if>
 	</select>
 	
 	<select id="select_category" resultType="String">
@@ -19,20 +22,20 @@
 	
 	<select id="select_catesearch" resultType="categorydao">
 		select * from category where ${search_part} like concat('%', #{search_word}, '%') 
-		order by cidx desc limit ${ no }, 10
+		order by cidx desc limit ${pageno}, ${datano}
 	</select>
 	
 	<select id="select_cateall" resultType="categorydao">
-		select * from category order by cidx desc limit ${ no }, 10
+		select * from category order by cidx desc limit ${pageno}, ${datano}
 	</select>
 	
 	<select id="select_prodsearch" resultType="productdao">
 		select * from product_cate where ${search_part} like concat('%', #{search_word}, '%') 
-		order by pidx desc limit ${ no }, 10
+		order by pidx desc limit ${pageno}, ${datano}
 	</select>
 	
 	<select id="select_prodall" resultType="productdao">
-		select * from product_cate order by pidx desc limit ${ no }, 10
+		select * from product_cate order by pidx desc limit ${pageno}, ${datano}
 	</select>
 	
 	<select id="select_file" resultType="String">

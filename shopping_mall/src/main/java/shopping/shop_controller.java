@@ -20,6 +20,11 @@ public class shop_controller {
 	
 	PrintWriter pw = null;
 	
+	@GetMapping("/")
+	public String shop_main() {
+		return "agree";
+	}
+	
 	@GetMapping("/admin_main.do")
 	public String admin_main(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
 			HttpServletRequest req, HttpServletResponse res, Model m) throws Exception {

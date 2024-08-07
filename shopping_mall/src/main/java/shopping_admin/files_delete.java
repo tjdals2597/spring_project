@@ -18,7 +18,9 @@ public class files_delete {
 			}
 			n++;
 		}
-		this.del_execute(req, data, "/notice_file/");
+		if (data.size() != 0) {
+			this.del_execute(req, data, "/notice_file/");
+		}
 	}
 	
 	public files_delete(HttpServletRequest req, product_module pdmd, int del_ck[]) throws Exception {
@@ -34,7 +36,9 @@ public class files_delete {
 			} while (w < namearr.length);
 			n++;
 		} while (n < flist.size());
-		this.del_execute(req, data, "/product_img/");
+		if (data.size() != 0) {
+			this.del_execute(req, data, "/product_img/");
+		}
 	}
 	
 	private void del_execute(HttpServletRequest req, List<String> files, String foldername) throws Exception {
