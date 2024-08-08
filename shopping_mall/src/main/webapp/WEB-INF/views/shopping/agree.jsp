@@ -5,9 +5,9 @@
   <head>
     <title>Shop Bag</title>
     <meta charset="utf-8" />
-    <link href="./css/index.css" rel="stylesheet" />
-    <link href="./css/mall/subpage.css" rel="stylesheet" />
-    <link href="./css/mall/agree.css?v=1" rel="stylesheet" />
+    <link href="../css/shopping/index.css" rel="stylesheet" />
+    <link href="../css/shopping/subpage.css" rel="stylesheet" />
+    <link href="../css/shopping/agree.css?v=1" rel="stylesheet" />
   </head>
   <body>
 <%@ include file="./top.jsp" %>
@@ -17,7 +17,7 @@
       <div class="sub_view">
 
     <div class="joinview">     
-    <form>
+    <form id="agree_frm">
         <h3>약관동의</h3>
 				<div class="join_agreement_cont">
 					<div class="join_agreement_box">
@@ -30,11 +30,11 @@
 					
 					<div class="join_agreement_box js_terms_view">
 						<div class="form_element">
-							<input type="checkbox" id="termsAgree1" name="agreementInfoFl" class="require" />
+							<input type="checkbox" id="termsAgree1" name="agreementInfoFl" value="Y" class="require" />
 							<label class="check_s" for="termsAgree1"><strong>(필수)</strong> 이용약관</label>
 							<span><a href="#" target="_blank">전체보기</a></span>
 						</div>
-						<div class="agreement_box">
+						<div class="agreement_box" id="use_agree">
 							
 						</div>
 						
@@ -42,11 +42,11 @@
 					
 					<div class="join_agreement_box js_terms_view">
 						<div class="form_element">
-							<input type="checkbox" id="termsAgree2" name="privateApprovalFl" class="require" />
+							<input type="checkbox" id="termsAgree2" name="privateApprovalFl" value="Y" class="require" />
 							<label class="check_s" for="termsAgree2"><strong>(필수)</strong> 개인정보 수집 및 이용 </label>
 							<span><a href="#" target="_blank">전체보기</a></span>
 						</div>
-						<div class="agreement_box">
+						<div class="agreement_box" id="info_agree">
 							
 						</div>
 					</div>
@@ -65,4 +65,5 @@
 </main>
 <%@ include file="./footer.jsp" %>
   </body>
+<script src="../js/shopping/agree.js?v=3"></script>
 </html>

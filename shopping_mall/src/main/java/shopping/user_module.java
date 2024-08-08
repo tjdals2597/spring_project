@@ -27,4 +27,26 @@ public class user_module {
 		this.keycode.put("ck", ck);
 		return this.sstm.update("shopuser.userlogin_ck_update", this.keycode);
 	}
+	
+	public String duplicate_idck(String uid) {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("part", "1");
+		this.keycode.put("uid", uid);
+		malluser_dao dao = this.sstm.selectOne("shopuser.user_search", this.keycode);
+		return (dao == null) ? "ok" : "error";
+	}
+	
+	public int insert_user(malluser_dao dao) {
+		dao.setLogin_status("정상");
+		return this.sstm.insert("shopuser.muser_signup", dao);
+	}
+	
+	public malluser_dao login_user(String id, String pw) {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("part", "2");
+		this.keycode.put("uid", id);
+		this.keycode.put("upass", pw);
+		malluser_dao dao = this.sstm.selectOne("shopuser.user_search", this.keycode);
+		return null;
+	}
 }

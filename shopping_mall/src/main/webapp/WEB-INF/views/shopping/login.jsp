@@ -5,8 +5,8 @@
   <head>
     <title>Shop Bag</title>
     <meta charset="utf-8" />
-    <link href="./css/index.css" rel="stylesheet" />
-    <link href="./css/mall/subpage.css" rel="stylesheet" />
+    <link href="../css/shopping/index.css" rel="stylesheet" />
+    <link href="../css/shopping/subpage.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -16,15 +16,14 @@
       <h3>MEMBER_LOGIN</h3>
       <div class="sub_view">
         
-
         <div class="loginview">
           <span class="member_l"></span>
           <span class="login">
-          <form>   
+          <form id="login_frm" onsubmit="return user_login()">   
           <table border="0" cellpadding="0" cellspacing="0" class="table_login">
           <tr>
           <td>
-          <input type="text" placeholder="아이디를 입력해주세요" class="id">
+          <input type="text" name="user_id" placeholder="아이디를 입력해주세요" class="id">
           </td>
           <td rowspan="2">
           <input type="submit" value="LOGIN" class="btn1">
@@ -32,21 +31,21 @@
           </tr>
           <tr>
           <td>
-          <input type="password" placeholder="패스워드를 입력해주세요" class="id">
+          <input type="password" name="user_pw" placeholder="패스워드를 입력해주세요" class="id">
           </td>
           </tr>
           </table>
               
           <div class="check1">
-          <input type="checkbox" id="l"> <label for="l" class="label_login">아이디 저장</label>
+          <input type="checkbox" name="save_uid" value="Y" id="l"> <label for="l" class="label_login">아이디 저장</label>
           </div>
           </form>
           <ul class="btns_login">
-          <li><input type="button" value="회원가입" class="a"></li>
-          <li><input type="button" value="아이디 찾기" class="a"></li>
-          <li><input type="button" value="비밀번호 찾기" class="a1"></li>
+          <li><input type="button" value="회원가입" onclick="page_location('1')" class="a"></li>
+          <li><input type="button" value="아이디 찾기" onclick="page_location('2')" class="a"></li>
+          <li><input type="button" value="비밀번호 찾기" onclick="page_location('3')" class="a1"></li>
           </ul>
-          <form>    
+          <form id="nonlogin_user" onsubmit="return non_login()">    
           <span class="font1">비회원 주문조회</span>
           <span class="search_login">
               <table border="0" cellpadding="0" cellspacing="0" class="table_login">
@@ -76,4 +75,5 @@
 </main>
 <%@ include file="./footer.jsp" %>
   </body>
+<script src="../js/shopping/login.js?v=2"></script>
 </html>
