@@ -21,6 +21,10 @@ public class notice_module {
 		return this.sstm.selectOne("shopnotice.alldata_count");
 	}
 	
+	public notice_dao notice_viewone(int nidx) {
+		return this.sstm.selectOne("shopnotice.one_notice_select", nidx);
+	}
+	
 	public List<notice_dao> notice_listall(Integer pno, Integer dno) {
 		this.keycode = new HashMap<String, String>();
 		this.keycode.put("pageno", String.valueOf(pno));

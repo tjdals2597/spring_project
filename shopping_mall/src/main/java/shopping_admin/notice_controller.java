@@ -71,8 +71,18 @@ public class notice_controller {
 	}
 	
 	@GetMapping("/notice_view.do") // 미완성 - 글 페이지 추가 시 업데이트
-	public String notice_view(@RequestParam int nidx) throws Exception {
-		this.ntmd.add_view_count(nidx);
+	public String notice_view(@SessionAttribute(required = false, name = "adminSessionData") ArrayList<Object> adata,
+			@RequestParam int nidx, HttpServletResponse res, Model m) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		if (adata == null) {
+			this.pw = res.getWriter();
+			this.pw.print("<script>alert('올바른 접근 방식이 아닙니다.'); location.href = './admin';</script>");
+			this.pw.close();
+		}
+		else {
+			this.ntmd.add_view_count(nidx);
+			m.addAttribute("notidata", this.ntmd.notice_viewone(nidx));
+		}
 		return "notice_view";
 	}
 	

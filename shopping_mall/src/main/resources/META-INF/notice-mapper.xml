@@ -6,6 +6,10 @@
 		select count(*) from notice
 	</select>
 
+	<select id="one_notice_select" resultType="noticedao">
+		select * from notice where nidx = #{nidx}
+	</select>
+
 	<select id="all_notice_select" resultType="noticedao">
 		select * from notice order by nidx desc limit ${pageno}, ${datano}
 	</select>

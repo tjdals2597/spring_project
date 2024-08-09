@@ -43,7 +43,7 @@
 		    <ol>
 		        <li><input type="checkbox" name="del_ck" value="${ notidata.getNidx() }" onclick="checkbox_eachck()"></li>
 		        <li>${ pageidx - stat.index }</li>
-		        <li>${ notidata.getNtitle() }</li>
+		        <li onclick="go_vpage('${ notidata.getNidx() }')">${ notidata.getNtitle() }</li>
 		        <li>${ notidata.getNamname() }</li>
 		        <li>${ fn:substring(notidata.getNindate(), 0, 10) }</li>
 		        <li>${ notidata.getNviews() }</li>
@@ -87,6 +87,10 @@
 </body>
 <script src="./js/list_checkbox.js?v=4"></script>
 <script>
+	function go_vpage(no) {
+		location.href='./notice_view.do?nidx=' + no;
+	}
+	
 	function go_wpage() {
 		location.href = "./notice_write.do";
 	}
