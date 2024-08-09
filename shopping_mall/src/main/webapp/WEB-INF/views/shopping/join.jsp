@@ -48,7 +48,7 @@
     </li>
     <li>※ 이메일</li>
     <li>
-    <input type="text" name="uemail" class="join_in1"> <input type="button" value="이메일 인증" class="join_btn1"> ※ 입력하신 이메일을 확인해 주세요.
+    <input type="text" name="uemail" id="user_email" class="join_in1"> <input type="button" id="emailCheckBtn" value="이메일 인증" class="join_btn1"> ※ 입력하신 이메일을 확인해 주세요.
     </li>
     <li>※ 인증번호</li>
     <li>
@@ -77,5 +77,5 @@
 </main>
 <%@ include file="./footer.jsp" %>
   </body>
-<script src="../js/shopping/join.js?v=5"></script>
+<script src="../js/shopping/join.js?v=7"></script>
 </html>
