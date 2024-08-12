@@ -10,40 +10,59 @@ function make_security_code() {
 }
 
 document.querySelector("#duplidBtn").addEventListener("click", function() {
-	fetch("./user_duplid.do?id=" + document.querySelector("#user_id").value)
-		.then(function(data) {
-			return data.text();
-		}).then(function(data) {
-			if (data == "ok") {
-				if (confirm("사용 가능한 아이디입니다.\n이 아이디를 사용하시겠습니까?")) {
-					document.querySelector("#user_id").readOnly = true;
+	if (join_frm.uid.value == "") {
+		alert("아이디를 입력해주세요.");
+		join_frm.uid.focus();
+	}
+	else {
+		fetch("./user_duplid.do?id=" + document.querySelector("#user_id").value)
+			.then(function(data) {
+				return data.text();
+			}).then(function(data) {
+				if (data == "ok") {
+					if (confirm("사용 가능한 아이디입니다.\n이 아이디를 사용하시겠습니까?")) {
+						document.querySelector("#user_id").readOnly = true;
+					}
 				}
-			}
-			else {
-				alert("사용 불가능한 아이디입니다.");
-			}
-		}).catch(function() {
-			alert("오류가 발생하였습니다.\n다시 시도해주세요.");
-		});
+				else {
+					alert("사용 불가능한 아이디입니다.");
+				}
+			}).catch(function() {
+				alert("오류가 발생하였습니다.\n다시 시도해주세요.");
+			});
+	}
 });
 
 document.querySelector("#emailCheckBtn").addEventListener("click", function() {
-	make_security_code();
-	fetch("./user_emailAuth.do", {
-			method : "POST",
-			headers : {"content-type" : "application/json"},
-			mode : "no-cors",
-			body : JSON.stringify({
-				user_email : document.querySelector("#user_email").value,
-				security_code : security
-			})
-		}).then(function(data) {
-			return data.text();
-		}).then(function(data) {
-			console.log(data);
-		}).catch(function() {
-			alert("오류가 발생하였습니다.\n다시 시도해주세요.");
-		});
+	if (join_frm.uemail.value == "") {
+		alert("이메일을 입력해주세요.");
+		join_frm.uemail.focus();
+	}
+	else {
+		make_security_code();
+		fetch("./user_emailAuth.do", {
+				method : "POST",
+				headers : {"content-type" : "application/json"},
+				mode : "no-cors",
+				body : JSON.stringify({
+					user_email : document.querySelector("#user_email").value,
+					security_code : security
+				})
+			}).then(function(data) {
+				return data.text();
+			}).then(function(data) {
+				if (data == "ok") {
+					alert("해당 주소로 메일을 발송하였습니다.\n확인 후 인증번호를 입력해주세요.");
+					document.querySelector("#user_email").readOnly = true;
+					document.querySelector("#user_code").focus();
+				}
+				else {
+					alert("오류가 발생하여 메일이 발송되지 않았습니다.\n다시 시도해주세요.");
+				}
+			}).catch(function() {
+				alert("오류가 발생하였습니다.\n다시 시도해주세요.");
+			});
+	}
 });
 
 document.querySelector("#btnNextStep").addEventListener("click", function() {
@@ -63,9 +82,13 @@ document.querySelector("#btnNextStep").addEventListener("click", function() {
 		alert("이름을 입력해주세요.");
 		join_frm.uname.focus();
 	}
-	else if (join_frm.uemail.value == "") {
-		alert("이메일을 입력해주세요.");
+	else if (!join_frm.uemail.readOnly || join_frm.uemail.value == "") {
+		alert("이메일 인증을 진행해주세요.");
 		join_frm.uemail.focus();
+	}
+	else if (document.querySelector("#user_code").value != security) {
+		alert("인증 코드가 일치하지 않습니다.");
+		document.querySelector("#user_code").focus();
 	}
 	else if (join_frm.uphone.value == "") {
 		alert("전화번호를 입력해주세요.");

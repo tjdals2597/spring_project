@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import shopping_admin.homepage_dao;
+
 @Repository("usermodule")
 public class user_module {
 
@@ -16,6 +18,10 @@ public class user_module {
 	
 	@Resource(name = "shoptemplate")
 	private SqlSessionTemplate sstm;
+	
+	public homepage_dao getHomepageInfo() {
+		return this.sstm.selectOne("shopadmin.search_hp_info");
+	}
 	
 	public List<malluser_dao> ulist_select() {
 		return this.sstm.selectList("shopuser.user_search");

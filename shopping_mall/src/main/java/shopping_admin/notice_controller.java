@@ -8,10 +8,15 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -84,6 +89,20 @@ public class notice_controller {
 			m.addAttribute("notidata", this.ntmd.notice_viewone(nidx));
 		}
 		return "notice_view";
+	}
+	
+	@GetMapping("/notice_filedown/{filename}")
+	//public ResponseEntity<ClassPathResource> notice_filedown(@PathVariable String filename) throws Exception {
+	public void notice_filedown(@PathVariable String filename) throws Exception {
+		ClassPathResource file = new ClassPathResource(filename);
+		System.out.println(file);
+		HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFilename());
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        /*
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(file);*/
 	}
 	
 	@PostMapping("/notice_writeok.do")

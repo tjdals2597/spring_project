@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,25 +26,26 @@
 <ul>
     <li>공지사항 제목</li>
     <li>
-       
+    	${ notidata.getNtitle() }
     </li>
 </ul>
 <ul>
     <li>글쓴이</li>
     <li>
-     
+     	${ notidata.getNamname() }
     </li>
 </ul>
 <ul>
     <li>첨부파일</li>
     <li>
-       
+    	<cr:set var="nfileString" value="${ fn:split(notidata.getNfile(), '|') }"/>
+       <a href="./notice_filedown/${ nfileString[1] }">${ nfileString[0] }</a>
     </li>
 </ul>
 <ul class="ul_height">
     <li>공지내용</li>
     <li>
-        <div class="notice_input3" style="overflow-y: auto;"></div>
+        <div class="notice_input3" style="overflow-y: auto;">${ notidata.getNtext() }</div>
     </li>
 </ul>
 </div>

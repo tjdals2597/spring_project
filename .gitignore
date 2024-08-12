@@ -1,8 +1,11 @@
 /.metadata/
 
+/shopping_mall/.classpath
 /shopping_mall/target/
 
 /shopping_mall/src/main/java/pay
+
+/shopping_mall/src/main/resources/email_auth.properties
 /shopping_mall/src/main/webapp/pay/
 
 /shopping_mall/src/main/webapp/WEB-INF/lib/INIpaySample_v1.3.jar

@@ -18,15 +18,15 @@
         <ul>
         <li><img src="../images/foot_logo.png"></li>
         <li>
-회사명 :  
-대표자 : 
-주소 :   <br>
+회사명 : ${ hpInfo.getCompamy_name() }
+대표자 : ${ hpInfo.getPresident_name() } | ${ hpInfo.getPresident_phone() }
+주소 : (${ hpInfo.getBusiness_zipcode() }) ${ hpInfo.getBusiness_address() } <br>
 고객센터 : 
 상담시간 : 
-E-Mail : 
-사업자등록번호 :  <br>
-통신판매업신고번호 : 
-개인정보보호책임자 :    <br>
+E-Mail : ${ hpInfo.getAdminemail() }
+사업자등록번호 : ${ hpInfo.getBusiness_regist_number() } <br>
+통신판매업신고번호 : ${ hpInfo.getMailorder_report_number() }
+개인정보보호책임자 : ${ hpInfo.getInfomanager_name() } | ${ hpInfo.getInfomanager_email() } <br>
 Copyright © 도메인명 All Rights Reserved.
         </li>
         </ul>    

@@ -52,7 +52,7 @@
     </li>
     <li>※ 인증번호</li>
     <li>
-    <input type="text" class="join_in1 join_in3" maxlength="8"> ※ 8자리 인증번호를 입력하세요.
+    <input type="text" id="user_code" class="join_in1 join_in3" maxlength="8"> ※ 8자리 인증번호를 입력하세요.
     </li>
     <li>※ 전화번호</li>
     <li>

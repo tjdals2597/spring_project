@@ -29,11 +29,13 @@ public class shop_controller extends password_sha3 {
 	PrintWriter pw = null;
 	
 	@GetMapping("/agree")
-	public String shop_agree() {
+	public String shop_agree(Model m) {
+		m.addAttribute("hpInfo", this.usmd.getHomepageInfo());
 		return "shopping/agree";
 	}
 	@GetMapping("/login")
-	public String shop_login() {
+	public String shop_login(Model m) {
+		m.addAttribute("hpInfo", this.usmd.getHomepageInfo());
 		return "shopping/login";
 	}
 	
@@ -47,6 +49,7 @@ public class shop_controller extends password_sha3 {
 			this.pw.close();
 		}
 		else {
+			m.addAttribute("hpInfo", this.usmd.getHomepageInfo());
 			m.addAttribute("agreementInfoFl", agreementInfoFl);
 			m.addAttribute("privateApprovalFl", privateApprovalFl);
 		}
@@ -68,10 +71,12 @@ public class shop_controller extends password_sha3 {
 	}
 	
 	@PostMapping("/user_emailAuth.do")
-	public void user_emailAuth(@RequestBody String requestData) throws Exception {
+	public void user_emailAuth(@RequestBody String requestData, HttpServletResponse res) throws Exception {
+		this.pw = res.getWriter();
 		JSONObject jo = new JSONObject(requestData);
 		authemail_post ap = new authemail_post(jo.get("user_email").toString(), jo.get("security_code").toString());
-		ap.post_execute();
+		this.pw.print(ap.post_execute());
+		this.pw.close();
 	}
 	
 	@PostMapping("/user_signup.do")
