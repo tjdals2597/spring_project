@@ -38,8 +38,11 @@
 <ul>
     <li>첨부파일</li>
     <li>
-    	<cr:set var="nfileString" value="${ fn:split(notidata.getNfile(), '|') }"/>
-       <a href="./notice_filedown/${ nfileString[1] }">${ nfileString[0] }</a>
+    	<cr:if test="${ notidata.getNfile() != '' }">
+	    	<cr:set var="notifile" value="${ fn:split(notidata.getNfile(), '|') }"/>
+			${ notifile[0] }
+			<button type="button" onclick="file_down('${ notifile[0] }', '${ notifile[1] }')" class="btn_button">다운로드</button>
+    	</cr:if>
     </li>
 </ul>
 <ul class="ul_height">
@@ -50,14 +53,18 @@
 </ul>
 </div>
 <div class="board_btn">
-    <button class="border_del">공지목록</button>
-    <button class="border_add">공지수정</button>
-    <button class="border_modify" style="margin-left: 8px;">공지삭제</button>
+    <button class="border_del" onclick="go_listPage()">공지목록</button>
+    <button class="border_add" onclick="update_notice()">공지수정</button>
+    <button class="border_modify" onclick="delete_notice()" style="margin-left: 8px;">공지삭제</button>
 </div>
 </section>
+<form id="notice_del_frm">
+	<input type="hidden" name="del_ck" value="${ notidata.getNidx() }">
+</form>
 </main>
 <footer class="main_copyright">
 	<%@ include file="./admin_footer.jsp" %>
 </footer>
 </body>
+<script src="./js/notice_view.js?v=1"></script>
 </html>

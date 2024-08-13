@@ -1,5 +1,8 @@
 package shopping_admin;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -91,18 +95,30 @@ public class notice_controller {
 		return "notice_view";
 	}
 	
-	@GetMapping("/notice_filedown/{filename}")
-	//public ResponseEntity<ClassPathResource> notice_filedown(@PathVariable String filename) throws Exception {
-	public void notice_filedown(@PathVariable String filename) throws Exception {
-		ClassPathResource file = new ClassPathResource(filename);
-		System.out.println(file);
-		HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFilename());
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        /*
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(file);*/
+	@GetMapping("/notice_filedown.do")
+	public void notice_filedown(@RequestParam(value = "", required = false) String oname, HttpServletRequest req,
+			@RequestParam(value = "", required = false) String fname, HttpServletResponse res) throws Exception {
+		if (fname.equals("") || fname == null || oname.equals("") || oname == null) {
+			res.setContentType("text/html; charset=UTF-8");
+			this.pw = res.getWriter();
+			this.pw.print("<script>alert('올바른 접근 방식이 아닙니다.'); location.href = './admin';</script>");
+			this.pw.close();
+		}
+		else {
+			String url = req.getServletContext().getRealPath("/notice_file/");
+			File f = new File(url + fname);
+			// file 다운로드 설정
+			res.setContentType("application/download");
+			res.setContentLength((int)f.length());
+			res.setHeader("Content-disposition", "attachment;filename=\"" + oname + "\"");
+			// response 객체를 통해서 서버로부터 파일 다운로드
+			OutputStream os = res.getOutputStream();
+			// 파일 입력 객체 생성
+			FileInputStream fis = new FileInputStream(f);
+			FileCopyUtils.copy(fis, os);
+			fis.close();
+			os.close();
+		}
 	}
 	
 	@PostMapping("/notice_writeok.do")
