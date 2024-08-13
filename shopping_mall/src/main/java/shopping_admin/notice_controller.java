@@ -32,7 +32,7 @@ public class notice_controller {
 	@Resource(name = "noticemodule")
 	private notice_module ntmd;
 	
-	final Integer DATA_COUNT_PER_PAGE = 10;
+	final Integer DATA_COUNT_PER_PAGE = 15;
 	final Integer LIMIT_PAGEING_COUNT = 10;
 	PrintWriter pw = null;
 	
