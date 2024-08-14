@@ -80,5 +80,5 @@
 		<%@ include file="./admin_footer.jsp" %>
     </footer>
 </body>
-<script src="./js/add_master.js?v=4"></script>
+<script src="./js/add_master.js?v=5"></script>
 </html>

@@ -34,7 +34,8 @@ document.querySelector("#duplidBtn").addEventListener("click", function() {
 });
 
 document.querySelector("#emailCheckBtn").addEventListener("click", function() {
-	if (join_frm.uemail.value == "") {
+	const eMail = /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i;
+	if (!eMail.test(join_frm.uemail.value)) {
 		alert("이메일을 입력해주세요.");
 		join_frm.uemail.focus();
 	}
@@ -66,6 +67,7 @@ document.querySelector("#emailCheckBtn").addEventListener("click", function() {
 });
 
 document.querySelector("#btnNextStep").addEventListener("click", function() {
+	const cellPhone = /^(?:(010)|(01[1|6|7|8|9]))(\d{3,4})(\d{4})$/;
 	if (!join_frm.uid.readOnly || join_frm.uid.value == "") {
 		alert("아이디 중복 체크를 진행해주세요.");
 		join_frm.uid.focus();
@@ -90,7 +92,7 @@ document.querySelector("#btnNextStep").addEventListener("click", function() {
 		alert("인증 코드가 일치하지 않습니다.");
 		document.querySelector("#user_code").focus();
 	}
-	else if (join_frm.uphone.value == "") {
+	else if (!cellPhone.test(join_frm.uphone.value)) {
 		alert("전화번호를 입력해주세요.");
 		join_frm.uphone.focus();
 	}

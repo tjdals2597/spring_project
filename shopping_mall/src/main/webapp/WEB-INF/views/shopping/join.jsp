@@ -77,5 +77,5 @@
 </main>
 <%@ include file="./footer.jsp" %>
   </body>
-<script src="../js/shopping/join.js?v=7"></script>
+<script src="../js/shopping/join.js?v=6"></script>
 </html>
