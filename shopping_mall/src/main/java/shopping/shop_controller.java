@@ -28,6 +28,12 @@ public class shop_controller extends password_sha3 {
 	
 	PrintWriter pw = null;
 	
+	@GetMapping("/")
+	public String shop_index(Model m) {
+		m.addAttribute("hpInfo", this.usmd.getHomepageInfo());
+		return "shopping/index";
+	}
+	
 	@GetMapping("/agree")
 	public String shop_agree(Model m) {
 		m.addAttribute("hpInfo", this.usmd.getHomepageInfo());
