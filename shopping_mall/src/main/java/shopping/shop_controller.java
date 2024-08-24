@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import shopping_admin.password_sha3;
+import shopping_admin.product_module;
 
 @Controller
 public class shop_controller extends password_sha3 {
@@ -26,10 +27,14 @@ public class shop_controller extends password_sha3 {
 	@Resource(name = "usermodule")
 	private user_module usmd;
 	
+	@Resource(name = "productmodule")
+	private product_module pdmd;
+	
 	PrintWriter pw = null;
 	
 	@GetMapping("/")
 	public String shop_index(Model m) {
+		m.addAttribute("catelist", this.pdmd.catelist_search());
 		m.addAttribute("hpInfo", this.usmd.getHomepageInfo());
 		return "shopping/index";
 	}

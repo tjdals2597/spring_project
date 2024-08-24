@@ -17,7 +17,7 @@
 	</select>
 	
 	<select id="catelist_pwpage" resultType="categorydao">
-		select cidx, clgmenu_name from category order by cidx desc
+		select cidx, clgmenu_name from category order by cls_code desc
 	</select>
 	
 	<select id="select_catesearch" resultType="categorydao">
