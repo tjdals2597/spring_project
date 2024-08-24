@@ -34,7 +34,8 @@ public class shop_controller extends password_sha3 {
 	
 	@GetMapping("/")
 	public String shop_index(Model m) {
-		m.addAttribute("catelist", this.pdmd.catelist_search());
+		m.addAttribute("catelist", this.pdmd.menu_catelist());
+		m.addAttribute("productlist", this.pdmd.main_prolist());
 		m.addAttribute("hpInfo", this.usmd.getHomepageInfo());
 		return "shopping/index";
 	}

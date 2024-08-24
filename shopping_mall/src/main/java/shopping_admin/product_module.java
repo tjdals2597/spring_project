@@ -17,6 +17,16 @@ public class product_module {
 	@Resource(name = "shoptemplate")
 	private SqlSessionTemplate sstm;
 	
+	public List<category_dao> menu_catelist() {
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("part", "1");
+		return this.sstm.selectList("cateproduct.catelist_pwpage", this.keycode);
+	}
+	
+	public List<product_dao> main_prolist() {
+		return this.sstm.selectList("product_mainpage");
+	}
+	
 	public List<category_dao> category_search(Integer pno, Integer dno) {
 		this.keycode = new HashMap<String, String>();
 		this.keycode.put("pageno", String.valueOf(pno));
@@ -92,7 +102,9 @@ public class product_module {
 	}
 	
 	public List<category_dao> catelist_search() {
-		return this.sstm.selectList("cateproduct.catelist_pwpage");
+		this.keycode = new HashMap<String, String>();
+		this.keycode.put("part", "2");
+		return this.sstm.selectList("cateproduct.catelist_pwpage", this.keycode);
 	}
 	
 	public int duplicate_codeck(String code) {

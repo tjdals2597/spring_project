@@ -16,8 +16,16 @@
 		select clgmenu_code from category
 	</select>
 	
-	<select id="catelist_pwpage" resultType="categorydao">
-		select cidx, clgmenu_name from category order by cls_code desc
+	<select id="catelist_pwpage" resultType="categorydao" parameterType="Map">
+		select cidx, clgmenu_name from category
+		<if test='part=="1"'>
+			where use_ck = 'Y'
+		</if>
+		order by cls_code asc
+	</select>
+	
+	<select id="product_mainpage" resultType="productdao">
+		select pidx, pname, original_price, discount_price, pimages from product order by pidx desc limit 0, 12
 	</select>
 	
 	<select id="select_catesearch" resultType="categorydao">
