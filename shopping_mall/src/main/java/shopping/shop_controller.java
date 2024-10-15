@@ -33,7 +33,13 @@ public class shop_controller extends password_sha3 {
 	PrintWriter pw = null;
 	
 	@GetMapping("/")
-	public String shop_index(Model m) {
+	public String shop_index(@SessionAttribute(required = false, name = "userSessionData") ArrayList<Object> udata,
+			Model m) {
+		String userName = "";
+		if (udata != null) {
+			userName = (String) udata.get(2);
+		}
+		m.addAttribute("userName", userName);
 		m.addAttribute("catelist", this.pdmd.menu_catelist());
 		m.addAttribute("productlist", this.pdmd.main_prolist());
 		m.addAttribute("hpInfo", this.usmd.getHomepageInfo());
@@ -129,6 +135,16 @@ public class shop_controller extends password_sha3 {
 		} finally {
 			this.pw.close();
 		}
+	}
+	
+	@PostMapping("/user_logout.do")
+	public void user_logout(@SessionAttribute(required = true, name = "userSessionData") ArrayList<Object> udata,
+			HttpServletResponse res, HttpSession htss) throws Exception {
+		res.setContentType("text/html; charset=UTF-8");
+		htss.removeAttribute("userSessionData");
+		this.pw = res.getWriter();
+		this.pw.print("<script>alert('로그아웃하셨습니다.'); location.href = './';</script>");
+		this.pw.close();
 	}
 	
 	@GetMapping("/admin_main.do")
