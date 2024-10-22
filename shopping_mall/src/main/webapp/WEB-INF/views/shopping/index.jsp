@@ -6,6 +6,8 @@
   <head>
     <title>${ hpInfo.getHometitle() }</title>
     <meta charset="utf-8" />
+    <meta name="naver-site-verification" content="ae074753cd9a8d0de93d840c76c89675e2aaac75" />
+    <meta name="google-site-verification" content="45TXrP-dJvTayTJl2HWcKEuX2n8DGKMDaCkVhLIcCZo" />
     <link href="../css/shopping/index.css?v=1" rel="stylesheet" />
     <link href="../css/shopping/menu.css?v=1" rel="stylesheet"/>
   </head>
@@ -25,7 +27,7 @@
     <div class="hero-header"></div>  
     <div class="products">
       <h3>NEW PRODUCTS</h3>
-      <div class="product-list">
+      <div class="product-list" id="productListBox">
       	<cr:forEach var="product" items="${ productlist }">
 	        <a href="#" class="product">
 	          <cr:set var="pimg" value="${ fn:split(product.getPimages(), '|') }"/>
@@ -49,4 +51,5 @@
 </main>
 <%@ include file="./footer.jsp" %>
   </body>
+  <script src="../js/shopping/index.js?v=1"></script>
 </html>

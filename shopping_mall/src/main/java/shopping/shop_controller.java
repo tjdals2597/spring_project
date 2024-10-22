@@ -11,11 +11,13 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import shopping_admin.password_sha3;
@@ -42,9 +44,24 @@ public class shop_controller extends password_sha3 {
 		}
 		m.addAttribute("userName", userName);
 		m.addAttribute("catelist", this.pdmd.menu_catelist());
-		m.addAttribute("productlist", this.pdmd.main_prolist());
 		m.addAttribute("hpInfo", this.usmd.getHomepageInfo());
 		return "shopping/index";
+	}
+	
+	@CrossOrigin(allowedHeaders = "*", origins = "*")
+	@GetMapping(value = "/product", produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String print_product(@RequestParam(required = false, name = "apikey") String apikey) throws Exception {
+		String result = null;
+		if (apikey != null && apikey.equals("93AD5BB7C893A469D28")) {
+			result = new json_maker().getProductList(this.pdmd.main_prolist());
+		}
+		else {
+			JSONObject jo = new JSONObject();
+			jo.put("product", "error");
+			result = jo.toString();
+		}
+		return result;
 	}
 	
 	@GetMapping("/agree")
