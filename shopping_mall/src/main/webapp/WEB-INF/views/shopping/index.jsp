@@ -24,29 +24,10 @@
 	</div>
 </nav>
  <main>
-    <div class="hero-header"></div>  
+    <div class="hero-header"></div>
     <div class="products">
       <h3>NEW PRODUCTS</h3>
-      <div class="product-list" id="productListBox">
-      	<cr:forEach var="product" items="${ productlist }">
-	        <a href="#" class="product">
-	          <cr:set var="pimg" value="${ fn:split(product.getPimages(), '|') }"/>
-	          <img src="../product_img/${ pimg[1] }" width="225" height="225">
-	          <div class="product-name">
-	            ${ product.getPname() }
-	          </div>
-	          <cr:choose>
-	         	<cr:when test="${ product.getDiscount_price() == 0 }">
-				  <div class="product-price">${ product.getOriginal_price() }</div>
-	          	</cr:when>
-	          	<cr:otherwise>
-	          	  <div class="product-price">${ product.getDiscount_price() }</div>
-	          	</cr:otherwise>
-	          </cr:choose>
-	        </a>
-      	</cr:forEach>
-        <div class="clearfix"></div>
-      </div>
+      <div class="product-list" id="productListBox"></div>
     </div>
 </main>
 <%@ include file="./footer.jsp" %>

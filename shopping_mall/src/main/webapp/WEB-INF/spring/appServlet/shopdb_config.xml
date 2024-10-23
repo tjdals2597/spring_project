@@ -30,7 +30,7 @@
 		<property name="mapperLocations" value="classpath:/META-INF/*-mapper.xml"/>
 	</bean>
 	
-	<bean id="shoptemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	<bean id="shoptemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="close">
 		<constructor-arg name="sqlSessionFactory" ref="shopdbfactory"/>
 	</bean>
 </beans>
