@@ -7,6 +7,7 @@
     <meta charset="utf-8" />
     <link href="../css/shopping/index.css" rel="stylesheet" />
     <link href="../css/shopping/subpage.css" rel="stylesheet" />
+    <link href="../css/shopping/lgnacnt_table.css?v=3" rel="stylesheet" />
   </head>
 
   <body>
@@ -64,16 +65,23 @@
               </table>
               <label class="check1">
               주문자명과 주문번호를 잊으신 경우, 고객센터로 문의하여 주시기 바랍니다.
-          </label>
+          	</label>
           </span>
           </form>
           </span>
       </div>
+
+	<div class="acnt_box">
+        <div class="acnt_title">일반 사용자 계정 견본</div>
+        <div class="account_info">아이디: <strong>hong</strong></div>
+        <div class="account_info">비밀번호: <strong>h1234</strong></div>
+        <button type="button" class="admin_page_btn" onclick="adminPageBtn()">관리자 페이지 이동</button>
+    </div>
 
       </div>
     </div>
 </main>
 <%@ include file="./footer.jsp" %>
   </body>
-<script src="../js/shopping/login.js?v=2"></script>
+<script src="../js/shopping/login.js?v=3"></script>
 </html>

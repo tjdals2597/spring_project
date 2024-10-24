@@ -14,6 +14,7 @@
     <link rel="icon" href="./img/logo.png" sizes="64x64">
     <link rel="icon" href="./img/logo.png" sizes="32x32">
     <link rel="icon" href="./img/logo.png" sizes="16x16">
+    <link rel="stylesheet" type="text/css" href="./css/shopping/lgnacnt_table.css?v=5">
 </head>
 <body class="bodycss">
     <header class="admin_title">
@@ -43,6 +44,30 @@
         </div>
         </form>
     </section>
+    <div class="acnt_box adminpage">
+        <div class="acnt_title">일반 사용자 계정 견본</div>
+        <table>
+			<thead>
+				<tr>
+					<th>아이디</th>
+					<th>비밀번호</th>
+					<th>구분</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>master</td>
+					<td>shop_master123</td>
+					<td>최고관리자</td>
+				</tr>
+				<tr>
+					<td>hongadmin</td>
+					<td>h1234</td>
+					<td>관리자</td>
+				</tr>
+			</tbody>
+		</table>
+    </div>
 <footer class="admin_copy_login">
 	<%@ include file="./admin_footer.jsp" %>
 </footer>

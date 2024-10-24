@@ -39,7 +39,6 @@ public class shop_controller extends password_sha3 {
 			Model m) {
 		String userName = "";
 		if (udata != null) {
-			System.out.println(udata);
 			userName = (String) udata.get(2);
 		}
 		m.addAttribute("userName", userName);

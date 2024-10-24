@@ -32,3 +32,7 @@ function non_login() {
 	console.log("test");
 	return false;
 }
+
+function adminPageBtn() {
+	location.href = './admin';
+}
