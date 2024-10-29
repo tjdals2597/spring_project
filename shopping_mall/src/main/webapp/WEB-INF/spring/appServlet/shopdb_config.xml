@@ -22,6 +22,10 @@
 		<property name="url" value="jdbc:mysql://localhost:3306/shopping_mall_db"/>
 		<property name="username" value="shopmall"/>
 		<property name="password" value="shopmall1234"/>
+		<property name="validationQuery" value="SELECT 1"/>
+		<property name="testOnBorrow" value="false"/>
+		<property name="testOnReturn" value="false"/>
+		<property name="testWhileIdle" value="true"/>
 	</bean>
 	
 	<bean id="shopdbfactory" class="org.mybatis.spring.SqlSessionFactoryBean">
